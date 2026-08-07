@@ -1,0 +1,2541 @@
+<!DOCTYPE html>
+<!-- Elevation Castle GitHub Pages deployment build: audio served from /audio -->
+<html lang="en" class="h-full w-full overflow-hidden bg-black text-amber-100 select-none">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Faithful Feedback: Elevation Castle</title>
+  
+  <!-- Google Fonts for Gothic Cinematic Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@600;700;900&family=Cinzel:wght@400;600;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cinzelDeco: ['"Cinzel Decorative"', 'serif'],
+            title: ['"IM Fell English SC"', 'serif'],
+            cinzel: ['"Cinzel"', 'serif'],
+            garamond: ['"Cormorant Garamond"', 'serif'],
+          },
+          colors: {
+            castle: {
+              gold: '#d4af37',
+              bronze: '#8c6d3b',
+              ember: '#ff5500',
+              shadow: '#0a080d',
+              stone: '#1a1821',
+              parchment: '#e8d8b8',
+              iron: '#2a2d34'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Gothic Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #070609; }
+    ::-webkit-scrollbar-thumb { background: #3b2d1d; border-radius: 3px; }
+    
+    /* Strict display override for hidden elements */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Cinematic Vignette Overlay */
+    .vignette-overlay {
+      background: radial-gradient(circle at 50% 45%, transparent 35%, rgba(4, 3, 6, 0.7) 75%, rgba(0, 0, 0, 0.98) 100%);
+    }
+
+    /* Fog Layers Animation */
+    @keyframes fogRoll {
+      0% { transform: translateX(-5%) translateY(0) scale(1); opacity: 0.18; }
+      50% { transform: translateX(8%) translateY(-10px) scale(1.05); opacity: 0.32; }
+      100% { transform: translateX(-5%) translateY(0) scale(1); opacity: 0.18; }
+    }
+    .animate-fog {
+      animation: fogRoll 32s ease-in-out infinite alternate;
+    }
+
+    /* Slow Cinematic Push-in for Castle Exterior */
+    @keyframes slowPushIn {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
+    .castle-image-viewport {
+      animation: slowPushIn 45s ease-out forwards;
+      transform-origin: 50% 45%;
+    }
+
+    /* Rapid Camera Zoom Push on Entry */
+    .camera-zoom-push {
+      transform: scale(1.7) !important;
+      transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1) !important;
+    }
+
+    /* Metallic Gold Text Shader - Plain Non-Hyperlinked Display */
+    .gold-gradient-text {
+      background: linear-gradient(180deg, #fffbf0 0%, #e6c575 40%, #a37c2d 80%, #61460d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 18px rgba(0,0,0,0.95));
+      pointer-events: none;
+    }
+
+    /* Door Opening 3D Perspective */
+    .door-container {
+      perspective: 1400px;
+    }
+    .door-left {
+      transform-origin: left center;
+      transition: transform 2.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .door-right {
+      transform-origin: right center;
+      transition: transform 2.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .doors-open .door-left {
+      transform: rotateY(-115deg);
+    }
+    .doors-open .door-right {
+      transform: rotateY(115deg);
+    }
+
+    /* Spilling Firelight Behind Doors */
+    @keyframes firelightPulse {
+      0%, 100% { opacity: 0.5; filter: blur(25px); }
+      50% { opacity: 0.85; filter: blur(35px); }
+    }
+    .firelight-spill {
+      background: radial-gradient(circle at center, rgba(255, 140, 20, 0.6) 0%, rgba(180, 70, 10, 0.3) 50%, transparent 80%);
+      animation: firelightPulse 2.8s ease-in-out infinite;
+    }
+
+    /* Cinematic Call to Action Prompt Button */
+    .cinematic-prompt {
+      letter-spacing: 0.35em;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      text-shadow: 0 0 12px rgba(212, 175, 55, 0.4), 0 2px 10px rgba(0,0,0,0.9);
+    }
+    .cinematic-prompt:hover {
+      letter-spacing: 0.45em;
+      color: #ffffff;
+      text-shadow: 0 0 25px rgba(255, 215, 0, 0.9), 0 0 40px rgba(255, 160, 30, 0.7);
+    }
+
+    /* Handcrafted Medieval Parchments */
+    .parchment-item {
+      background: #e3d2b2 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.12"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3"/></filter><rect width="100" height="100" filter="url(%23n)"/></svg>');
+      color: #2b1f13;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.85), inset 0 0 30px rgba(100,70,30,0.3);
+      border: 1px solid rgba(139, 90, 43, 0.4);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .parchment-item:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.95), 0 0 25px rgba(212, 175, 55, 0.35);
+    }
+
+    /* Burned / Scorch Edge FX */
+    .parchment-scorched {
+      filter: sepia(0.8) contrast(1.5) brightness(0.4);
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.95), 0 10px 30px rgba(0,0,0,0.9);
+      border-color: #3d0000 !important;
+    }
+
+    /* Red Wax Seal Slam Animation */
+    @keyframes waxSlam {
+      0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+      60% { transform: scale(0.9) rotate(-3deg); opacity: 1; }
+      80% { transform: scale(1.1) rotate(-5deg); }
+      100% { transform: scale(1) rotate(-5deg); opacity: 1; }
+    }
+    .animate-wax-slam {
+      animation: waxSlam 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    /* Torch Flicker Overlay */
+    @keyframes torchFlicker {
+      0%, 100% { opacity: 0.25; }
+      25% { opacity: 0.38; }
+      50% { opacity: 0.2; }
+      75% { opacity: 0.32; }
+    }
+    .animate-torch-glow {
+      animation: torchFlicker 3.5s ease-in-out infinite;
+    }
+
+    /* Smoke / Hearth Text Engraving Effect */
+    @keyframes smokeEngrave {
+      0% { opacity: 0; transform: translateY(15px); filter: blur(8px); }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    .animate-smoke-text {
+      animation: smokeEngrave 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Chamber II Unique Hotspot Pulse & Manuscript Card FX */
+    @keyframes manuscriptPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
+      50% { transform: scale(1.06); box-shadow: 0 0 28px rgba(255, 215, 0, 0.8); }
+    }
+    .animate-manuscript-glow {
+      animation: manuscriptPulse 3s ease-in-out infinite;
+    }
+
+    /* Key Lock Transition Visuals */
+    @keyframes keyRotateLock {
+      0% { transform: rotate(0deg) scale(0.8); opacity: 0; }
+      50% { transform: rotate(90deg) scale(1.2); opacity: 1; }
+      100% { transform: rotate(180deg) scale(1); opacity: 0; }
+    }
+    .animate-key-lock {
+      animation: keyRotateLock 1.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    /* Chamber III: Round Table & Tool Glow Visuals */
+    .round-table-surface {
+      background: radial-gradient(circle at 50% 50%, rgba(35, 25, 15, 0.85) 0%, rgba(18, 12, 8, 0.92) 70%, rgba(8, 5, 3, 0.98) 100%);
+      border: 3px solid rgba(212, 175, 55, 0.4);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), inset 0 0 60px rgba(212, 175, 55, 0.15);
+    }
+
+    .tool-card {
+      background: rgba(18, 14, 11, 0.82);
+      border: 1px solid rgba(180, 140, 60, 0.35);
+      backdrop-filter: blur(8px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tool-card:hover {
+      transform: translateY(-4px) scale(1.03);
+      border-color: rgba(255, 215, 0, 0.7);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+    .tool-card-selected {
+      background: rgba(45, 30, 10, 0.92) !important;
+      border: 2px solid rgba(255, 215, 0, 0.9) !important;
+      box-shadow: 0 0 30px rgba(255, 180, 30, 0.6), inset 0 0 15px rgba(255, 215, 0, 0.2) !important;
+      transform: translateY(-3px) scale(1.02);
+    }
+    .tool-card-decree-glow {
+      box-shadow: 0 0 45px rgba(255, 200, 50, 0.95), 0 0 20px rgba(255, 255, 255, 0.8) !important;
+      border-color: #ffd700 !important;
+      animation: manuscriptPulse 2.5s ease-in-out infinite;
+    }
+    .tool-card-faded {
+      opacity: 0.38 !important;
+      filter: grayscale(0.6);
+      pointer-events: none;
+    }
+
+    .decree-brighten {
+      opacity: 0.35 !important;
+      transition: opacity 2s ease-in-out;
+    }
+
+    /* Chamber IV: Five Faithful Reveal */
+    @keyframes faithfulRise {
+      0% { opacity: 0; transform: translateY(24px) scale(0.94); filter: blur(7px); }
+      70% { opacity: 1; transform: translateY(-3px) scale(1.02); filter: blur(0); }
+      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+    @keyframes crestPulse {
+      0%, 100% { box-shadow: 0 0 18px rgba(212,175,55,0.25), inset 0 0 12px rgba(212,175,55,0.08); }
+      50% { box-shadow: 0 0 38px rgba(255,215,80,0.55), inset 0 0 20px rgba(212,175,55,0.18); }
+    }
+    .faithful-seal {
+      background:
+        radial-gradient(circle at 50% 35%, rgba(212,175,55,0.18), rgba(18,12,8,0.92) 62%),
+        rgba(8,6,5,0.92);
+      border: 1px solid rgba(212,175,55,0.45);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.75);
+      transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease, opacity .3s ease;
+    }
+    .faithful-seal.revealed {
+      animation: faithfulRise .85s cubic-bezier(.16,1,.3,1) forwards, crestPulse 3.2s ease-in-out 1s infinite;
+    }
+    .faithful-seal.selectable {
+      cursor: pointer;
+    }
+    .faithful-seal.selectable:hover,
+    .faithful-seal.selectable:focus-visible {
+      transform: translateY(-5px) scale(1.02);
+      border-color: rgba(255,215,90,0.9);
+      outline: none;
+    }
+    .faithful-seal.chosen {
+      border: 2px solid rgba(255,225,120,0.98);
+      box-shadow: 0 0 46px rgba(255,205,70,0.72), inset 0 0 22px rgba(255,215,100,0.18);
+      transform: translateY(-5px) scale(1.03);
+    }
+    .faithful-roman {
+      width: 2.7rem;
+      height: 2.7rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      border: 1px solid rgba(212,175,55,0.65);
+      background: rgba(45,28,8,0.86);
+      color: #f5d98a;
+      box-shadow: 0 0 18px rgba(212,175,55,0.25);
+    }
+    .throne-glass {
+      background: rgba(5,4,4,0.72);
+      backdrop-filter: blur(7px);
+      border: 1px solid rgba(212,175,55,0.3);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.78);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .faithful-seal.revealed { animation: none; opacity: 1 !important; transform: none !important; filter: none !important; }
+      .faithful-seal, .faithful-seal:hover, .faithful-seal:focus-visible, .faithful-seal.chosen { transition: none; transform: none; }
+    }
+
+  
+    /* Force the approved gothic/classic title face */
+    .font-title {
+      font-family: "IM Fell English SC", Georgia, serif !important;
+      font-weight: 400 !important;
+      letter-spacing: 0.035em;
+    }
+
+  
+    /* Castle audio controls */
+    #castle-sound-toggle {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 10000;
+      min-width: 50px;
+      min-height: 50px;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 200, 92, 0.72);
+      background: rgba(18, 12, 8, 0.9);
+      color: #f7dda0;
+      box-shadow: 0 8px 24px rgba(0,0,0,.55), 0 0 18px rgba(212,175,55,.16);
+      backdrop-filter: blur(7px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 13px;
+      font-family: "Cinzel", serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      cursor: pointer;
+    }
+    #castle-sound-toggle:hover,
+    #castle-sound-toggle:focus-visible {
+      background: rgba(48, 31, 12, .96);
+      outline: 2px solid rgba(255, 220, 120, .75);
+      outline-offset: 2px;
+    }
+    #castle-sound-toggle .sound-label { display: none; }
+    @media (min-width: 700px) {
+      #castle-sound-toggle .sound-label { display: inline; }
+    }
+
+  
+    /* Unlocked-room Castle Map navigation */
+    #castle-map-button {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 10020;
+      width: 52px;
+      height: 52px;
+      border-radius: 9999px;
+      border: 1px solid rgba(245,200,92,.72);
+      background: rgba(18,12,8,.9);
+      color: #f7dda0;
+      box-shadow: 0 8px 24px rgba(0,0,0,.55), 0 0 18px rgba(212,175,55,.16);
+      backdrop-filter: blur(7px);
+      font-size: 23px;
+      cursor: pointer;
+    }
+    #castle-map-button:hover, #castle-map-button:focus-visible {
+      background: rgba(48,31,12,.96);
+      outline: 2px solid rgba(255,220,120,.75);
+      outline-offset: 2px;
+    }
+    #castle-map-panel {
+      position: fixed;
+      top: 78px;
+      right: 16px;
+      z-index: 10019;
+      width: min(330px, calc(100vw - 32px));
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.5);
+      background: rgba(12,8,6,.96);
+      box-shadow: 0 18px 48px rgba(0,0,0,.75);
+      backdrop-filter: blur(10px);
+    }
+    .castle-map-room {
+      width: 100%;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 12px;
+      margin-top: 8px;
+      border-radius: 9px;
+      border: 1px solid rgba(212,175,55,.25);
+      background: rgba(55,36,15,.32);
+      color: #f7e5b8;
+      text-align: left;
+      font-family: "Cinzel", serif;
+      font-size: 11px;
+      letter-spacing: .08em;
+    }
+    .castle-map-room:not(:disabled) { cursor: pointer; }
+    .castle-map-room:not(:disabled):hover,
+    .castle-map-room:not(:disabled):focus-visible {
+      border-color: rgba(255,220,120,.85);
+      background: rgba(92,60,20,.48);
+      outline: none;
+    }
+    .castle-map-room.current {
+      border-color: rgba(255,215,80,.9);
+      box-shadow: inset 0 0 18px rgba(212,175,55,.14);
+    }
+    .castle-map-room:disabled {
+      opacity: .42;
+      cursor: not-allowed;
+    }
+
+  </style>
+</head>
+
+<body class="h-full w-full overflow-hidden font-garamond bg-black text-amber-100 select-none relative">
+  <!-- Scene 1: Opening Exterior Title Sequence (Edge-to-Edge Castle Concept Art) -->
+  <section id="scene-opening" class="absolute inset-0 w-full h-full z-30 transition-opacity duration-1000 overflow-hidden">
+    
+    <!-- Castle Exterior Concept Art Image with Slow Push-in -->
+    <div id="castle-image-container" class="absolute inset-0 w-full h-full castle-image-viewport">
+      <img 
+        id="castle-image"
+        src="https://lh3.googleusercontent.com/d/1DcXMbVn2eQwM_X7JCWdhOcdVa1O4glrf" 
+        alt="Elevation Castle Exterior" 
+        class="w-full h-full object-cover object-center pointer-events-none"
+        onerror="handleCastleImageFallback(this)"
+      />
+    </div>
+
+    <!-- Atmospheric Layered Fog -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/50 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-white/5 animate-fog pointer-events-none mix-blend-screen"></div>
+
+    <!-- Interactive Canvas for Rain & Lightning Overlay -->
+    <canvas id="hero-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+    <!-- Dark Cinematic Vignette -->
+    <div class="vignette-overlay absolute inset-0 pointer-events-none z-20"></div>
+
+    <!-- Title Card (Pure Text, NO Hyperlinks) -->
+    <div id="hero-title-group" class="absolute inset-0 z-30 flex flex-col justify-end p-8 md:p-16 lg:p-24 pointer-events-auto transition-all duration-700">
+      <div class="max-w-2xl space-y-3">
+        
+        <!-- Clean Text - Non-clickable -->
+        <h1 class="font-title text-4xl sm:text-6xl md:text-7xl font-black text-amber-100 tracking-wider gold-gradient-text leading-tight">
+          FAITHFUL FEEDBACK
+        </h1>
+
+        <div class="flex items-center gap-4 pt-1">
+          <div class="h-px w-12 bg-amber-500/50"></div>
+          <p class="font-cinzel text-sm md:text-xl text-amber-200/90 tracking-[0.35em] uppercase font-semibold drop-shadow-lg">
+            ELEVATION CASTLE
+          </p>
+        </div>
+
+        <div class="pt-10">
+          <button 
+            id="enter-castle-btn"
+            onclick="initiateCastleEntry()" 
+            class="cinematic-prompt font-cinzel text-sm md:text-base text-amber-300/90 font-semibold tracking-[0.35em] uppercase cursor-pointer focus:outline-none flex items-center gap-3 bg-black/40 hover:bg-black/60 px-6 py-3 rounded-md border border-amber-500/30 transition-all"
+          >
+            <span>ENTER THE CASTLE</span>
+            <span class="text-amber-400">&rarr;</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 2: Transition Overlay - Enormous Medieval Oak Doors -->
+  <div id="doors-overlay" class="fixed inset-0 z-40 hidden bg-black door-container flex items-center justify-center overflow-hidden transition-opacity duration-700">
+    <!-- Firelight Beam Spilling Behind Doors -->
+    <div id="firelight-beam" class="absolute inset-0 firelight-spill opacity-0 transition-opacity duration-1000 pointer-events-none"></div>
+    
+    <div class="w-full h-full flex relative z-10">
+      <!-- Left Oak Door -->
+      <div id="door-left-panel" class="door-left w-1/2 h-full bg-stone-950 border-r-4 border-amber-950/80 shadow-2xl relative flex items-center justify-end pr-8" style="background-image: repeating-linear-gradient(90deg, #150f09 0px, #1a120b 40px, #0b0704 80px);">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.8)_100%)]"></div>
+        <div class="w-full h-3 bg-stone-900 border-y border-amber-900/40 absolute top-1/4"></div>
+        <div class="w-full h-3 bg-stone-900 border-y border-amber-900/40 absolute top-3/4"></div>
+        <div class="w-16 h-16 rounded-full border-4 border-stone-800 bg-stone-900 shadow-2xl relative flex items-center justify-center">
+          <div class="w-10 h-10 rounded-full border-2 border-amber-900/60"></div>
+        </div>
+      </div>
+
+      <!-- Right Oak Door -->
+      <div id="door-right-panel" class="door-right w-1/2 h-full bg-stone-950 border-l-4 border-amber-950/80 shadow-2xl relative flex items-center justify-start pl-8" style="background-image: repeating-linear-gradient(90deg, #0b0704 0px, #1a120b 40px, #150f09 80px);">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.8)_100%)]"></div>
+        <div class="w-full h-3 bg-stone-900 border-y border-amber-900/40 absolute top-1/4"></div>
+        <div class="w-full h-3 bg-stone-900 border-y border-amber-900/40 absolute top-3/4"></div>
+        <div class="w-16 h-16 rounded-full border-4 border-stone-800 bg-stone-900 shadow-2xl relative flex items-center justify-center">
+          <div class="w-10 h-10 rounded-full border-2 border-amber-900/60"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 3: Interior Environment - The Great Hall -->
+  <section id="scene-interior" class="absolute inset-0 w-full h-full opacity-0 pointer-events-none transition-opacity duration-1000 z-20 bg-black overflow-y-auto overflow-x-hidden flex flex-col justify-between p-4 md:p-8">
+    
+    <!-- Full-Screen Official Great Hall Concept Art Background -->
+    <div class="fixed inset-0 w-full h-full pointer-events-none">
+      <img 
+        id="greathall-image"
+        src="https://lh3.googleusercontent.com/d/1Jz2cwpyIlZ3Q35xdnWt9wc_jWXTm8_cE" 
+        alt="The Great Hall" 
+        class="w-full h-full object-cover object-center opacity-80"
+        onerror="handleGreatHallImageFallback(this)"
+      />
+    </div>
+
+    <!-- Torch Glow & Flickering Overlay -->
+    <div class="fixed inset-0 bg-gradient-to-t from-black via-transparent to-black/80 pointer-events-none"></div>
+    <div class="fixed inset-0 bg-amber-600/10 mix-blend-color-dodge animate-torch-glow pointer-events-none"></div>
+
+    <!-- Interactive Canvas for Floating Embers -->
+    <canvas id="greathall-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+    <!-- Header Overlay -->
+    <header class="relative z-20 w-full max-w-4xl mx-auto text-center pt-2 md:pt-4 pointer-events-auto">
+      <div class="inline-block px-8 py-3 rounded-lg bg-black/80 backdrop-blur-md border border-amber-900/50 shadow-2xl">
+        <p class="font-cinzel text-xs md:text-sm tracking-[0.4em] text-amber-400/90 font-semibold uppercase">
+          CHAMBER I &bull; THE GREAT HALL
+        </p>
+        <h2 class="font-title text-2xl md:text-4xl lg:text-5xl font-bold tracking-wider gold-gradient-text mt-1">
+          SIX COMMENTS, ONE STUDENT
+        </h2>
+        <p class="font-garamond text-base md:text-lg text-amber-200/90 italic mt-1">
+          Which will move learning forward? Inspect and reorder the evidence resting on the banquet table.
+        </p>
+
+        <!-- Medieval Ranking Prompt -->
+        <div class="mt-4 pt-3 border-t border-amber-900/40 flex flex-col items-center gap-1">
+          <span class="font-cinzel text-xs md:text-sm font-bold tracking-[0.3em] text-amber-300 uppercase">
+            ARRANGE THE EVIDENCE
+          </span>
+          <span class="font-cinzel text-[11px] md:text-xs text-amber-200/70 tracking-widest uppercase">
+            MOST LIKELY TO MOVE LEARNING &nbsp;&darr;&nbsp; LEAST LIKELY TO MOVE LEARNING
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Center Table Scene: 6 Interactive Parchment Evidence Items (Rankable) -->
+    <main 
+      id="evidence-table-grid"
+      class="relative z-20 w-full max-w-6xl mx-auto my-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 md:p-6"
+    >
+      <!-- Parchments are dynamically rendered by JavaScript to support live drag-and-drop & keyboard reordering -->
+    </main>
+
+    <!-- Bottom Action & Key Reveal Bar -->
+    <footer class="relative z-20 w-full max-w-2xl mx-auto text-center pb-6 pt-2 pointer-events-auto flex flex-col items-center gap-4">
+      
+      <!-- Cast Your Verdict Prompt Trigger -->
+      <div id="verdict-banner" class="w-full">
+        <button 
+          id="verdict-btn"
+          onclick="promptCastVerdict()"
+          class="px-8 py-3.5 font-cinzel text-sm md:text-base font-bold tracking-[0.25em] text-amber-100 uppercase bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 hover:from-amber-900 hover:to-amber-950 border-2 border-amber-500/60 rounded-md shadow-2xl transition-all cursor-pointer hover:border-amber-300 hover:scale-105"
+        >
+          ⚖️ CAST YOUR VERDICT
+        </button>
+        <p id="verdict-subtext" class="font-garamond text-sm text-amber-200/80 italic mt-2">
+          Rearrange the parchments above into your desired rank order, then cast your verdict on which comment to banish.
+        </p>
+      </div>
+
+      <!-- Banishment Status Bar -->
+      <div id="banish-status-bar" class="hidden inline-flex items-center gap-3 px-6 py-2.5 bg-stone-950/90 border border-amber-700/50 rounded-full shadow-2xl backdrop-blur">
+        <span class="font-cinzel text-xs text-amber-200 tracking-wider">🔥 A comment has been banished to the hearth</span>
+      </div>
+
+      <!-- Key of Discernment Reward Card -->
+      <div id="key-reward-card" class="hidden w-full max-w-md p-6 bg-gradient-to-b from-stone-950/95 to-amber-950/90 border-2 border-amber-500/70 rounded-lg shadow-2xl backdrop-blur text-center space-y-4 animate-smoke-text">
+        <div class="flex justify-center">
+          <!-- Medieval Key SVG Icon -->
+          <div class="w-16 h-16 rounded-full bg-amber-950/80 border-2 border-amber-400/80 flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.5)]">
+            <svg class="w-10 h-10 text-amber-300 drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v2h2v-2h2v-2h-8.35zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-title text-xl font-bold tracking-wider gold-gradient-text">
+            KEY OF DISCERNMENT
+          </h3>
+          <p class="font-garamond text-base text-amber-200/90 italic mt-1">
+            Claimed in Chamber I. This relic represents your judgment on feedback.
+          </p>
+        </div>
+
+        <!-- NEW Chamber II Transition Button Trigger -->
+        <div class="pt-2">
+          <button 
+            id="unlock-chamber2-btn"
+            onclick="transitionToChamber2()" 
+            class="px-6 py-3.5 font-cinzel text-xs md:text-sm font-bold tracking-[0.25em] text-amber-100 uppercase bg-gradient-to-r from-amber-900 via-stone-900 to-amber-950 hover:from-amber-800 hover:to-amber-900 border-2 border-amber-400/80 rounded shadow-2xl transition-all cursor-pointer hover:scale-105 flex items-center justify-center gap-2 mx-auto"
+          >
+            <span>🔑 UNLOCK HIDDEN ARCHIVES</span>
+            <span>&rarr;</span>
+          </button>
+        </div>
+      </div>
+
+    </footer>
+  </section>
+
+  <!-- Red Hidden Door & Antique Lock Transition Screen -->
+  <div id="chamber2-transition-overlay" class="fixed inset-0 z-50 hidden bg-black door-container flex flex-col items-center justify-center overflow-hidden transition-opacity duration-700">
+    <!-- Candlelight Spill Effect Behind Hidden Door -->
+    <div id="hidden-door-light" class="absolute inset-0 firelight-spill opacity-0 transition-opacity duration-1000 pointer-events-none"></div>
+
+    <!-- Hidden Library Doors Panels -->
+    <div id="hidden-doors-wrapper" class="absolute inset-0 w-full h-full flex z-10 pointer-events-none">
+      <div id="hidden-door-left" class="door-left w-1/2 h-full bg-red-950/90 border-r-2 border-amber-800/60 shadow-2xl relative flex items-center justify-end pr-4" style="background-image: repeating-linear-gradient(0deg, #1f0808 0px, #2a0b0b 30px, #140505 60px);">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.85)_100%)]"></div>
+      </div>
+      <div id="hidden-door-right" class="door-right w-1/2 h-full bg-red-950/90 border-l-2 border-amber-800/60 shadow-2xl relative flex items-center justify-start pl-4" style="background-image: repeating-linear-gradient(0deg, #140505 0px, #2a0b0b 30px, #1f0808 60px);">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.85)_100%)]"></div>
+      </div>
+    </div>
+
+    <!-- Antique Lock & Turning Key Animation Card -->
+    <div class="relative z-20 flex flex-col items-center text-center p-6 bg-black/80 backdrop-blur-md rounded-xl border border-amber-700/50 shadow-2xl max-w-lg mx-4">
+      <div id="antique-lock-icon" class="w-24 h-24 rounded-full border-4 border-amber-600/80 bg-stone-950 flex items-center justify-center shadow-[0_0_50px_rgba(212,175,55,0.6)] mb-4">
+        <svg id="lock-svg-key" class="w-12 h-12 text-amber-400 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3 3.1-3s3.1 1.29 3.1 3v2z"/>
+        </svg>
+      </div>
+      <h2 class="font-title text-xl md:text-2xl font-bold gold-gradient-text tracking-widest uppercase">
+        TURNING THE KEY OF DISCERNMENT
+      </h2>
+      <p id="hidden-door-status-text" class="font-garamond text-base text-amber-200/90 italic mt-2">
+        Inserting key into the antique lock...
+      </p>
+    </div>
+  </div>
+
+  <!-- Scene 4: Chamber II Environment - The Hidden Archives -->
+  <section id="scene-chamber2" class="absolute inset-0 w-full h-full opacity-0 pointer-events-none transition-opacity duration-1000 z-20 bg-black overflow-y-auto overflow-x-hidden flex flex-col justify-between p-4 md:p-8">
+    
+    <!-- Full-Screen Official Hidden Archives Concept Art Background -->
+    <div class="fixed inset-0 w-full h-full pointer-events-none">
+      <img 
+        id="archives-image"
+        src="https://lh3.googleusercontent.com/d/1uTKrWx1ZSEb6pPOSVVSHGkQPB3zzb9hg" 
+        alt="The Hidden Archives" 
+        class="w-full h-full object-cover object-center opacity-85"
+        onerror="handleArchivesImageFallback(this)"
+      />
+    </div>
+
+    <!-- Candlelight Flare & Gentle Shadows Overlay -->
+    <div class="fixed inset-0 bg-gradient-to-t from-black via-black/40 to-black/80 pointer-events-none"></div>
+    <div class="fixed inset-0 bg-amber-700/10 mix-blend-soft-light animate-torch-glow pointer-events-none"></div>
+
+    <!-- Interactive Canvas for Drifting Dust & Candle Sparks -->
+    <canvas id="archives-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+    <!-- Header Overlay for Chamber II -->
+    <header class="relative z-20 w-full max-w-4xl mx-auto text-center pt-2 md:pt-4 pointer-events-auto">
+      <div class="inline-block px-8 py-3 rounded-lg bg-black/85 backdrop-blur-md border border-amber-900/60 shadow-2xl">
+        <p class="font-cinzel text-xs md:text-sm tracking-[0.4em] text-amber-400/90 font-semibold uppercase">
+          CHAMBER II &bull; THE HIDDEN ARCHIVES
+        </p>
+        <h2 class="font-title text-2xl md:text-4xl lg:text-5xl font-bold tracking-wider gold-gradient-text mt-1">
+          QUESTION INHERITED WISDOM
+        </h2>
+        <p class="font-garamond text-base md:text-lg text-amber-200/90 italic mt-1">
+          Six Ancient Laws lie scattered among these dusty stacks. Discover each manuscript and decide its fate: KEEP, REWRITE, or BANISH.
+        </p>
+
+        <!-- Discovery Tracker Progress -->
+        <div class="mt-3 pt-2 border-t border-amber-900/40 flex items-center justify-between text-xs font-cinzel text-amber-300">
+          <span class="tracking-widest uppercase">DISCOVERED LAWS:</span>
+          <span id="ancient-laws-progress" class="font-bold text-amber-400 tracking-wider">0 / 6 CONSIDERED</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Library Exploration Grid (Scattered Manuscript Hotspots resting on shelves/desks) -->
+    <main 
+      id="ancient-laws-grid"
+      class="relative z-20 w-full max-w-6xl mx-auto my-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 md:p-6"
+    >
+      <!-- 6 Ancient Manuscripts rendered by JS -->
+    </main>
+
+    <!-- Chamber II Footer & Key of Wisdom Reveal -->
+    <footer class="relative z-20 w-full max-w-2xl mx-auto text-center pb-6 pt-2 pointer-events-auto flex flex-col items-center gap-4">
+      
+      <!-- Archives Status Prompt -->
+      <div id="archives-prompt-card" class="w-full px-6 py-3 rounded-md bg-stone-950/80 border border-amber-900/50 backdrop-blur shadow-2xl">
+        <p class="font-garamond text-sm text-amber-200/90 italic">
+          Select any manuscript above to bring it forward, discuss its wisdom, and move it to its physical destination.
+        </p>
+      </div>
+
+      <!-- Key of Wisdom Reward Card (Revealed after all 6 are categorized) -->
+      <div id="wisdom-key-card" class="hidden w-full max-w-md p-6 bg-gradient-to-b from-stone-950/95 to-amber-950/90 border-2 border-amber-500/80 rounded-lg shadow-2xl backdrop-blur text-center space-y-3 animate-smoke-text">
+        <div class="flex justify-center">
+          <div class="w-16 h-16 rounded-full bg-amber-950/90 border-2 border-amber-400/90 flex items-center justify-center shadow-[0_0_25px_rgba(255,215,0,0.6)]">
+            <!-- Key Icon -->
+            <svg class="w-10 h-10 text-amber-300 drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.65-4C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v2h2v-2h2v-2h-8.35z"/>
+            </svg>
+          </div>
+        </div>
+        <h3 class="font-title text-xl font-bold tracking-wider gold-gradient-text">
+          KEY OF WISDOM
+        </h3>
+        <p class="font-garamond text-lg text-amber-100 italic font-semibold">
+          "Not every old truth deserves to remain unquestioned."
+        </p>
+        <p class="font-garamond text-sm text-amber-200/80 italic pt-1">
+          Claimed in Chamber II. Step into the Council Chamber to determine your action.
+        </p>
+
+        <!-- Chamber III Transition Button Trigger -->
+        <div class="pt-2">
+          <button 
+            id="unlock-chamber3-btn"
+            onclick="transitionToChamber3()" 
+            class="px-6 py-3.5 font-cinzel text-xs md:text-sm font-bold tracking-[0.25em] text-amber-100 uppercase bg-gradient-to-r from-amber-900 via-stone-900 to-amber-950 hover:from-amber-800 hover:to-amber-900 border-2 border-amber-400/80 rounded shadow-2xl transition-all cursor-pointer hover:scale-105 flex items-center justify-center gap-2 mx-auto"
+          >
+            <span>⚔️ PROCEED TO THE COUNCIL CHAMBER</span>
+            <span>&rarr;</span>
+          </button>
+        </div>
+      </div>
+
+    </footer>
+  </section>
+
+  <!-- Red Hidden Door & Antique Lock Transition Screen to Chamber III -->
+  <div id="chamber3-transition-overlay" class="fixed inset-0 z-50 hidden bg-black door-container flex flex-col items-center justify-center overflow-hidden transition-opacity duration-700">
+    <div id="council-door-light" class="absolute inset-0 firelight-spill opacity-0 transition-opacity duration-1000 pointer-events-none"></div>
+
+    <div id="council-doors-wrapper" class="absolute inset-0 w-full h-full flex z-10 pointer-events-none">
+      <div id="council-door-left" class="door-left w-1/2 h-full bg-stone-950 border-r-2 border-amber-800/60 shadow-2xl relative flex items-center justify-end pr-4">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.85)_100%)]"></div>
+      </div>
+      <div id="council-door-right" class="door-right w-1/2 h-full bg-stone-950 border-l-2 border-amber-800/60 shadow-2xl relative flex items-center justify-start pl-4">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.85)_100%)]"></div>
+      </div>
+    </div>
+
+    <div class="relative z-20 flex flex-col items-center text-center p-6 bg-black/80 backdrop-blur-md rounded-xl border border-amber-700/50 shadow-2xl max-w-lg mx-4">
+      <div id="council-lock-icon" class="w-24 h-24 rounded-full border-4 border-amber-600/80 bg-stone-950 flex items-center justify-center shadow-[0_0_50px_rgba(212,175,55,0.6)] mb-4">
+        <svg id="council-lock-svg-key" class="w-12 h-12 text-amber-400 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v2h2v-2h2v-2h-8.35zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+        </svg>
+      </div>
+      <h2 class="font-title text-xl md:text-2xl font-bold gold-gradient-text tracking-widest uppercase">
+        ENTERING THE COUNCIL CHAMBER
+      </h2>
+      <p id="council-door-status-text" class="font-garamond text-base text-amber-200/90 italic mt-2">
+        Unlatching the high arched oak doors...
+      </p>
+    </div>
+  </div>
+
+  <!-- Scene 5: Chamber III Environment - The Council Chamber -->
+  <section id="scene-chamber3" class="absolute inset-0 w-full h-full opacity-0 pointer-events-none transition-opacity duration-1000 z-20 bg-black overflow-y-auto overflow-x-hidden flex flex-col justify-between p-4 md:p-8">
+    
+    <!-- Full-Screen Official Council Chamber Background Image -->
+    <div class="fixed inset-0 w-full h-full pointer-events-none">
+      <img 
+        id="council-image"
+        src="https://lh3.googleusercontent.com/d/1v3JYLkNdS_txPA9USf_0skKUapS67aqO" 
+        alt="The Council Chamber" 
+        class="w-full h-full object-cover object-center opacity-90 transition-opacity duration-1000"
+        onerror="handleCouncilImageFallback(this)"
+      />
+    </div>
+
+    <!-- Atmospheric Overlay Layers (Candle Glow & Decree Brighten Overlay) -->
+    <div class="fixed inset-0 bg-gradient-to-t from-black via-black/30 to-black/70 pointer-events-none"></div>
+    <div id="council-light-overlay" class="fixed inset-0 bg-amber-400/0 mix-blend-soft-light transition-opacity duration-1000 pointer-events-none"></div>
+    <div class="fixed inset-0 bg-amber-600/10 mix-blend-color-dodge animate-torch-glow pointer-events-none"></div>
+
+    <!-- Interactive Canvas for Ambient Movement: Candle Flicker, Drifting Dust & Faint Floating Embers -->
+    <canvas id="council-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+    <!-- Header & Scenario Overlay -->
+    <header class="relative z-20 w-full max-w-4xl mx-auto text-center pt-2 md:pt-4 pointer-events-auto">
+      <div class="inline-block px-8 py-4 rounded-xl bg-black/85 backdrop-blur-md border border-amber-800/60 shadow-2xl space-y-2">
+        <p class="font-cinzel text-xs md:text-sm tracking-[0.4em] text-amber-400/90 font-semibold uppercase">
+          ⚔️ CHAMBER III &bull; THE COUNCIL CHAMBER
+        </p>
+        
+        <!-- The Scenario Display -->
+        <h2 class="font-title text-xl md:text-3xl lg:text-4xl font-black tracking-wider gold-gradient-text leading-snug">
+          THIRTY SUBMISSIONS. TWENTY MINUTES. YOU CANNOT DO EVERYTHING.
+        </h2>
+        <p class="font-garamond text-lg md:text-xl text-amber-200/95 italic font-semibold">
+          Choose THREE feedback moves that would create the greatest impact for your students AND remain sustainable for you.
+        </p>
+
+        <!-- Selection Tracker -->
+        <div class="pt-2 border-t border-amber-900/50 flex items-center justify-between text-xs font-cinzel text-amber-300">
+          <span class="tracking-widest uppercase">COUNCIL DECREE STRATEGIES:</span>
+          <span id="council-selection-tracker" class="font-bold text-amber-400 tracking-wider">0 / 3 SELECTED</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- The Round Table Central Interface -->
+    <main class="relative z-20 w-full max-w-6xl mx-auto my-auto py-6 px-2 md:px-6 flex flex-col items-center">
+      
+      <!-- Medieval Round Table Visual Container -->
+      <div id="round-table-container" class="w-full max-w-5xl rounded-3xl p-6 md:p-10 round-table-surface relative">
+        
+        <!-- Circular Center Focus Area where chosen tools gather -->
+        <div class="w-full max-w-2xl mx-auto mb-8 p-4 rounded-full border border-amber-500/30 bg-black/40 backdrop-blur-xs text-center relative flex flex-col items-center justify-center min-h-[110px]">
+          <p class="font-cinzel text-xs font-bold text-amber-400/90 tracking-[0.3em] uppercase mb-2">
+            THE ROUND TABLE CENTER &bull; CHOSEN STRATEGIES
+          </p>
+          
+          <div id="table-center-slots" class="flex flex-wrap items-center justify-center gap-3 w-full">
+            <span class="font-garamond text-sm text-amber-200/60 italic">
+              Choose the three relics you would carry into your classroom.
+            </span>
+          </div>
+        </div>
+
+        <!-- 10 Interactive Feedback Tools Ring Grid -->
+        <div id="council-tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 w-full">
+          <!-- Rendered dynamically by JS -->
+        </div>
+
+      </div>
+
+      <!-- Discussion Questions Prompts (Revealed after 3 selected) -->
+      <div id="council-discussion-section" class="hidden w-full max-w-3xl mt-8 p-6 md:p-8 rounded-xl bg-stone-950/90 border-2 border-amber-600/70 shadow-2xl backdrop-blur space-y-6 animate-smoke-text">
+        
+        <div class="text-center pb-1">
+          <p class="font-cinzel text-xs font-bold tracking-[0.3em] text-amber-400 uppercase">
+            COUNCIL DELIBERATION
+          </p>
+          <h3 class="font-title text-xl md:text-2xl font-bold gold-gradient-text mt-1">
+            DISCUSS WITH YOUR TABLE
+          </h3>
+        </div>
+
+        <!-- Non-editable Parchment Callout for Facilitator-Led Discussion -->
+        <div class="parchment-item rounded-lg p-6 md:p-8 text-stone-950 border-2 border-amber-800/60 shadow-2xl space-y-3">
+          <ul class="space-y-3.5 font-garamond text-base md:text-xl font-bold italic leading-snug">
+            <li class="flex items-start gap-3">
+              <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
+              <span>Why did you choose these three strategies?</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
+              <span>What valuable strategy did you leave behind?</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
+              <span>What makes your combination sustainable?</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Cast Decree Button -->
+        <div class="text-center pt-2">
+          <button 
+            id="cast-decree-btn"
+            onclick="castCouncilDecree()" 
+            class="px-8 py-4 font-cinzel text-sm md:text-base font-bold tracking-[0.25em] text-amber-100 uppercase bg-gradient-to-r from-amber-950 via-amber-900 to-amber-950 hover:from-amber-800 hover:to-amber-900 border-2 border-amber-400/80 rounded shadow-2xl transition-all cursor-pointer hover:scale-105"
+          >
+            ⚖️ CAST THE COUNCIL DECREE
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Chamber III Footer & Key of Resolve Reveal -->
+    <footer class="relative z-20 w-full max-w-2xl mx-auto text-center pb-6 pt-2 pointer-events-auto flex flex-col items-center gap-4">
+      
+      <!-- Castle Accepts Decree Banner & Key Card -->
+      <div id="council-decree-outcome" class="hidden w-full max-w-md p-6 bg-gradient-to-b from-stone-950/95 to-amber-950/90 border-2 border-amber-400/90 rounded-lg shadow-2xl backdrop-blur text-center space-y-4 animate-smoke-text">
+        
+        <div class="px-4 py-2 bg-amber-950/80 border border-amber-500/60 rounded-md">
+          <p id="castle-accepts-text" class="font-cinzel text-sm md:text-base font-bold text-amber-300 tracking-wider uppercase">
+            Your decree has been entered into the Castle Record.
+          </p>
+        </div>
+
+        <div class="flex justify-center pt-1">
+          <div class="w-16 h-16 rounded-full bg-amber-950/90 border-2 border-amber-300 flex items-center justify-center shadow-[0_0_35px_rgba(255,215,0,0.8)]">
+            <svg class="w-10 h-10 text-amber-300 drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v2h2v-2h2v-2h-8.35zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-title text-2xl font-bold tracking-wider gold-gradient-text">
+            KEY OF RESOLVE
+          </h3>
+          <p class="font-garamond text-lg text-amber-100 italic font-semibold mt-1">
+            "Wisdom without action changes nothing."
+          </p>
+          <p class="font-garamond text-xs text-amber-200/80 italic pt-1">
+            Claimed in Chamber III. Your decree is sealed in the Castle annals.
+          </p>
+        </div>
+
+        <!-- Unlock Throne Room Button -->
+        <div class="pt-2">
+          <button 
+            id="unlock-throne-btn"
+            onclick="transitionToThroneRoom()" 
+            class="px-6 py-3.5 font-cinzel text-xs md:text-sm font-bold tracking-[0.25em] text-amber-100 uppercase bg-gradient-to-r from-amber-900 via-stone-900 to-amber-950 hover:from-amber-800 hover:to-amber-900 border-2 border-amber-400/80 rounded shadow-2xl transition-all cursor-pointer hover:scale-105 flex items-center justify-center gap-2 mx-auto"
+          >
+            <span>👑 UNLOCK THE THRONE ROOM</span>
+            <span>&rarr;</span>
+          </button>
+        </div>
+
+      </div>
+
+    </footer>
+  </section>
+
+  <!-- Modal View: Throne Room Locked Notice -->
+  <div id="throne-locked-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="relative w-full max-w-md p-6 bg-stone-950 border-2 border-amber-600/80 rounded-lg shadow-2xl text-center space-y-4">
+      <div class="w-16 h-16 rounded-full bg-amber-950 border border-amber-400 mx-auto flex items-center justify-center text-2xl">
+        👑
+      </div>
+      <h3 class="font-title text-xl font-bold gold-gradient-text uppercase">
+        THE THRONE ROOM AWAITS
+      </h3>
+      <p class="font-garamond text-base text-amber-200/90 italic">
+        Your decree in the Council Chamber has been recorded. The Throne Room remains sealed until the next chronicle.
+      </p>
+      <button 
+        onclick="closeThroneModal()" 
+        class="px-6 py-2.5 font-cinzel text-xs font-bold text-amber-100 uppercase bg-amber-950 hover:bg-amber-900 border border-amber-500 rounded cursor-pointer"
+      >
+        RETURN TO COUNCIL CHAMBER
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal View: Chamber II Ancient Law Inspection -->
+  <div id="ancient-law-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="relative w-full max-w-xl p-6 md:p-8 bg-stone-950 border-2 border-amber-600/80 rounded-xl shadow-2xl space-y-5 text-center">
+      <button onclick="closeAncientLawModal()" class="absolute top-4 right-4 text-amber-400 hover:text-white font-bold text-lg cursor-pointer">✕</button>
+      
+      <div>
+        <p id="modal-law-header" class="font-cinzel text-xs font-bold tracking-[0.3em] text-amber-400 uppercase">
+          ANCIENT LAW
+        </p>
+        <p id="modal-law-belief" class="font-garamond text-xl md:text-2xl font-bold italic text-amber-100 mt-2 leading-snug">
+          ""
+        </p>
+      </div>
+
+      <div class="space-y-2 pt-2 border-t border-amber-900/40">
+        <p class="font-cinzel text-xs font-bold text-amber-300 uppercase tracking-widest">
+          DECIDE ITS FATE:
+        </p>
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="assignLawDestination('KEEP')" class="py-2.5 px-2 bg-amber-950/90 hover:bg-amber-900 border border-amber-600 rounded text-amber-200 font-cinzel text-xs font-bold uppercase cursor-pointer transition-all">
+            📜 KEEP
+          </button>
+          <button onclick="assignLawDestination('REWRITE')" class="py-2.5 px-2 bg-amber-900/90 hover:bg-amber-800 border border-amber-500 rounded text-amber-100 font-cinzel text-xs font-bold uppercase cursor-pointer transition-all">
+            ✒️ REWRITE
+          </button>
+          <button onclick="assignLawDestination('BANISH')" class="py-2.5 px-2 bg-red-950/90 hover:bg-red-900 border border-red-700 rounded text-red-200 font-cinzel text-xs font-bold uppercase cursor-pointer transition-all">
+            🔒 BANISH
+          </button>
+        </div>
+      </div>
+
+      <div id="law-reflection-container" class="hidden p-4 bg-amber-950/40 border border-amber-700/50 rounded text-left space-y-1">
+        <span class="font-cinzel text-[10px] font-bold text-amber-400 uppercase tracking-wider block">ARCHIVAL REFLECTION:</span>
+        <p id="law-reflection-text" class="font-garamond text-sm text-amber-200/90 italic leading-relaxed"></p>
+      </div>
+
+      <div class="pt-2">
+        <button onclick="closeAncientLawModal()" class="px-6 py-2.5 font-cinzel text-xs font-bold text-amber-100 uppercase bg-amber-950 hover:bg-amber-900 border border-amber-500 rounded cursor-pointer">
+          RETURN TO ARCHIVES
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal View: Chamber I Cast Verdict & Banishment Modal -->
+  <div id="verdict-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="relative w-full max-w-xl p-6 md:p-8 bg-stone-950 border-2 border-amber-600/80 rounded-xl shadow-2xl space-y-5">
+      <button onclick="closeVerdictModal()" class="absolute top-4 right-4 text-amber-400 hover:text-white font-bold text-lg cursor-pointer">✕</button>
+
+      <div class="text-center space-y-2">
+        <div class="w-14 h-14 rounded-full bg-amber-950 border-2 border-amber-500 mx-auto flex items-center justify-center text-2xl">
+          ⚖️
+        </div>
+        <h3 class="font-title text-2xl font-bold gold-gradient-text uppercase">
+          CAST YOUR VERDICT
+        </h3>
+        <p class="font-garamond text-base text-amber-200/90 italic">
+          Select which feedback comment is least effective and should be banished to the hearthfire:
+        </p>
+      </div>
+
+      <div id="verdict-options-list" class="space-y-2.5 max-h-60 overflow-y-auto pr-1">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="flex justify-end gap-3 pt-2 border-t border-amber-900/40">
+        <button onclick="closeVerdictModal()" class="px-4 py-2 font-cinzel text-xs font-bold text-amber-300 uppercase bg-stone-900 hover:bg-stone-800 border border-amber-900/60 rounded cursor-pointer">
+          CANCEL
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Scene Transition Overlay: Ceremonial Three Keys Ritual for The Throne Room -->
+  <div id="throne-transition-overlay" class="fixed inset-0 z-50 hidden bg-black flex flex-col items-center justify-center overflow-hidden transition-opacity duration-1000 p-6">
+    
+    <!-- Deep Golden Unlocking Aura Flare -->
+    <div id="throne-golden-flare" class="absolute inset-0 bg-radial from-amber-500/20 via-amber-900/10 to-transparent opacity-0 transition-opacity duration-1000 pointer-events-none"></div>
+
+    <!-- Floating 3 Keys Container -->
+    <div class="relative z-10 flex flex-col items-center max-w-2xl text-center space-y-8">
+      
+      <!-- Key Relics Cluster -->
+      <div class="flex items-center justify-center gap-6 sm:gap-10">
+        
+        <!-- Key 1: Key of Discernment -->
+        <div id="ritual-key-1" class="flex flex-col items-center space-y-2 opacity-20 scale-90 transition-all duration-700">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-stone-950 border-2 border-amber-500/50 flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+            <svg class="w-9 h-9 sm:w-11 sm:h-11 text-amber-300 drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v2h2v-2h2v-2h-8.35zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+            </svg>
+          </div>
+          <span class="font-cinzel text-[10px] sm:text-xs font-bold text-amber-300 tracking-wider uppercase">KEY OF DISCERNMENT</span>
+        </div>
+
+        <!-- Key 2: Key of Wisdom -->
+        <div id="ritual-key-2" class="flex flex-col items-center space-y-2 opacity-20 scale-90 transition-all duration-700">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-stone-950 border-2 border-amber-500/50 flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+            <svg class="w-9 h-9 sm:w-11 sm:h-11 text-amber-300 drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.65-4C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v2h2v-2h2v-2h-8.35z"/>
+            </svg>
+          </div>
+          <span class="font-cinzel text-[10px] sm:text-xs font-bold text-amber-300 tracking-wider uppercase">KEY OF WISDOM</span>
+        </div>
+
+        <!-- Key 3: Key of Resolve -->
+        <div id="ritual-key-3" class="flex flex-col items-center space-y-2 opacity-20 scale-90 transition-all duration-700">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-stone-950 border-2 border-amber-500/50 flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+            <svg class="w-9 h-9 sm:w-11 sm:h-11 text-amber-300 drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v2h2v-2h2v-2h-8.35zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+            </svg>
+          </div>
+          <span class="font-cinzel text-[10px] sm:text-xs font-bold text-amber-300 tracking-wider uppercase">KEY OF RESOLVE</span>
+        </div>
+
+      </div>
+
+      <!-- Sequential Ritual Narratives -->
+      <div class="space-y-3 min-h-[80px]">
+        <h3 id="ritual-text-claimed" class="font-title text-lg sm:text-2xl font-bold gold-gradient-text tracking-widest uppercase opacity-0 transition-opacity duration-700">
+          THREE KEYS HAVE BEEN CLAIMED.
+        </h3>
+        <p id="ritual-text-door" class="font-garamond text-base sm:text-xl text-amber-200/90 italic opacity-0 transition-opacity duration-700">
+          ONE FINAL DOOR REMAINS.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scene 6: Chamber IV Environment - The Throne Room -->
+  <section id="scene-throne" class="absolute inset-0 w-full h-full opacity-0 pointer-events-none transition-opacity duration-1000 z-20 bg-black overflow-y-auto overflow-x-hidden flex flex-col p-4 md:p-8">
+
+    <!-- Full-Screen Official Throne Room Background Image (Cinematic Set) -->
+    <div class="fixed inset-0 w-full h-full pointer-events-none">
+      <img 
+        id="throne-image"
+        src="https://lh3.googleusercontent.com/d/1t_vVBuJx_gwkqrZCAu8oH3kuNQIEeyQW" 
+        alt="The Throne Room" 
+        class="w-full h-full object-cover object-center opacity-95 transition-opacity duration-1000"
+        onerror="handleThroneImageFallback(this)"
+      />
+    </div>
+
+    <!-- Quiet cinematic overlays -->
+    <div class="fixed inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/60 pointer-events-none"></div>
+    <div class="fixed inset-0 bg-amber-700/5 mix-blend-color-dodge animate-torch-glow pointer-events-none"></div>
+    <canvas id="throne-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+    <div class="relative z-20 w-full max-w-6xl mx-auto flex flex-col items-center py-2 md:py-4 gap-5 md:gap-7">
+
+      <!-- Arrival / reveal header -->
+      <header class="text-center max-w-4xl throne-glass rounded-xl px-6 md:px-10 py-5 md:py-6">
+        <p class="font-cinzel text-xs tracking-[0.38em] text-amber-400/90 font-semibold uppercase">
+          👑 CHAMBER IV &bull; THE THRONE ROOM
+        </p>
+        <h2 class="font-title text-3xl md:text-5xl font-bold tracking-wide gold-gradient-text mt-2">
+          THE FIVE FAITHFUL
+        </h2>
+        <div id="throne-arrival-copy" class="mt-3 font-garamond text-base md:text-xl text-amber-100/95 leading-relaxed">
+          <p>You judged the evidence. You questioned inherited wisdom. You chose what was worth carrying forward.</p>
+          <p class="italic text-amber-200/90 mt-1">Now the Castle reveals what has endured.</p>
+        </div>
+        <button
+          id="reveal-faithful-btn"
+          onclick="revealFiveFaithful()"
+          class="mt-5 px-7 py-3.5 font-cinzel text-xs md:text-sm font-bold tracking-[0.24em] text-amber-100 uppercase bg-gradient-to-r from-amber-950 via-amber-800 to-amber-950 hover:from-amber-800 hover:to-amber-900 border-2 border-amber-400/80 rounded-md shadow-2xl transition-all cursor-pointer hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-300"
+        >
+          👑 REVEAL THE FIVE FAITHFUL
+        </button>
+      </header>
+
+      <!-- Five Faithful crests -->
+      <main id="five-faithful-grid" class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4" aria-live="polite">
+
+        <button type="button" data-faithful="0" onclick="chooseFaithful(0)" class="faithful-seal opacity-0 pointer-events-none rounded-xl p-4 md:p-5 text-center min-h-[210px] flex flex-col items-center justify-start">
+          <span class="faithful-roman font-cinzel font-bold text-sm">I</span>
+          <h3 class="font-title text-xl md:text-2xl text-amber-100 mt-3 leading-tight">Start With What's Working</h3>
+          <p class="font-garamond text-sm md:text-base text-amber-200/90 mt-3 leading-snug">Name the strength worth carrying forward.</p>
+          <p class="font-cinzel text-[10px] text-amber-400/70 uppercase tracking-wider mt-auto pt-4">Recognize</p>
+        </button>
+
+        <button type="button" data-faithful="1" onclick="chooseFaithful(1)" class="faithful-seal opacity-0 pointer-events-none rounded-xl p-4 md:p-5 text-center min-h-[210px] flex flex-col items-center justify-start">
+          <span class="faithful-roman font-cinzel font-bold text-sm">II</span>
+          <h3 class="font-title text-xl md:text-2xl text-amber-100 mt-3 leading-tight">Focus on the Heart of the Task</h3>
+          <p class="font-garamond text-sm md:text-base text-amber-200/90 mt-3 leading-snug">Prioritize feedback connected to the learning that matters most.</p>
+          <p class="font-cinzel text-[10px] text-amber-400/70 uppercase tracking-wider mt-auto pt-4">Prioritize</p>
+        </button>
+
+        <button type="button" data-faithful="2" onclick="chooseFaithful(2)" class="faithful-seal opacity-0 pointer-events-none rounded-xl p-4 md:p-5 text-center min-h-[210px] flex flex-col items-center justify-start">
+          <span class="faithful-roman font-cinzel font-bold text-sm">III</span>
+          <h3 class="font-title text-xl md:text-2xl text-amber-100 mt-3 leading-tight">One Doable Next Step</h3>
+          <p class="font-garamond text-sm md:text-base text-amber-200/90 mt-3 leading-snug">Give one clear, manageable action the learner can take next.</p>
+          <p class="font-cinzel text-[10px] text-amber-400/70 uppercase tracking-wider mt-auto pt-4">Act</p>
+        </button>
+
+        <button type="button" data-faithful="3" onclick="chooseFaithful(3)" class="faithful-seal opacity-0 pointer-events-none rounded-xl p-4 md:p-5 text-center min-h-[210px] flex flex-col items-center justify-start">
+          <span class="faithful-roman font-cinzel font-bold text-sm">IV</span>
+          <h3 class="font-title text-xl md:text-2xl text-amber-100 mt-3 leading-tight">Build in Time to Act</h3>
+          <p class="font-garamond text-sm md:text-base text-amber-200/90 mt-3 leading-snug">Feedback becomes learning when students have time to use it.</p>
+          <p class="font-cinzel text-[10px] text-amber-400/70 uppercase tracking-wider mt-auto pt-4">Revise</p>
+        </button>
+
+        <button type="button" data-faithful="4" onclick="chooseFaithful(4)" class="faithful-seal opacity-0 pointer-events-none rounded-xl p-4 md:p-5 text-center min-h-[210px] flex flex-col items-center justify-start">
+          <span class="faithful-roman font-cinzel font-bold text-sm">V</span>
+          <h3 class="font-title text-xl md:text-2xl text-amber-100 mt-3 leading-tight">Make It Sustainable</h3>
+          <p class="font-garamond text-sm md:text-base text-amber-200/90 mt-3 leading-snug">Choose feedback practices you can realistically maintain.</p>
+          <p class="font-cinzel text-[10px] text-amber-400/70 uppercase tracking-wider mt-auto pt-4">Sustain</p>
+        </button>
+
+      </main>
+
+      <!-- Final reflection: revealed after all five -->
+      <section id="final-reflection" class="hidden w-full max-w-4xl throne-glass rounded-xl px-6 md:px-10 py-5 text-center animate-smoke-text">
+        <p class="font-cinzel text-xs tracking-[0.32em] text-amber-400 uppercase font-bold">THE FINAL DECREE</p>
+        <h3 class="font-title text-2xl md:text-3xl text-amber-100 mt-2">Which Faithful will you intentionally strengthen?</h3>
+        <p class="font-garamond text-base md:text-lg text-amber-200/90 italic mt-2">
+          Choose one crest. Then tell your table what that could look like in your classroom.
+        </p>
+        <p id="chosen-faithful-message" class="hidden mt-4 px-5 py-3 rounded-md bg-amber-950/70 border border-amber-500/50 font-garamond text-lg text-amber-100"></p>
+        <p class="font-garamond text-sm md:text-base text-amber-200/75 italic mt-4">
+          The Castle is complete. The work begins beyond its walls.
+        </p>
+
+        <!-- Resource button is intentionally hidden until a guide URL is supplied. -->
+        <a id="five-faithful-guide-link" href="#" target="_blank" rel="noopener noreferrer"
+           class="hidden mt-5 inline-flex px-6 py-3 font-cinzel text-xs font-bold tracking-[0.2em] uppercase text-amber-100 bg-amber-950/90 border border-amber-400/70 rounded-md hover:bg-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-300">
+          🪴 OPEN ASSESSMENT & FEEDBACK TOP 5
+        </a>
+      </section>
+
+      <div id="throne-live-region" class="sr-only" aria-live="polite"></div>
+    </div>
+  </section>
+
+
+  <script>
+    // Canvas & Fallback functions
+    let heroCanvasAnim, ghCanvasAnim, arcCanvasAnim, councilCanvasAnim, throneCanvasAnim;
+    let lightningOpacity = 0;
+
+    function handleCastleImageFallback(img) {
+      img.onerror = null;
+      img.src = 'https://placehold.co/1920x1080/0a080d/d4af37?text=Elevation+Castle+Exterior';
+    }
+    function handleGreatHallImageFallback(img) {
+      img.onerror = null;
+      img.src = 'https://placehold.co/1920x1080/100c08/d4af37?text=Chamber+I+Great+Hall';
+    }
+    function handleArchivesImageFallback(img) {
+      img.onerror = null;
+      img.src = 'https://placehold.co/1920x1080/0c080a/d4af37?text=Chamber+II+Hidden+Archives';
+    }
+    function handleCouncilImageFallback(img) {
+      img.onerror = null;
+      img.src = 'https://placehold.co/1920x1080/0d0b08/d4af37?text=Chamber+III+Council+Chamber';
+    }
+    function handleThroneImageFallback(img) {
+      img.onerror = null;
+      img.src = 'https://placehold.co/1920x1080/090705/d4af37?text=Chamber+IV+The+Throne+Room';
+    }
+
+    function renderHeroCanvas() {
+      const canvas = document.getElementById('hero-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const raindrops = Array.from({ length: 120 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        length: Math.random() * 20 + 10,
+        speed: Math.random() * 10 + 12,
+        opacity: Math.random() * 0.4 + 0.1
+      }));
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        
+        ctx.strokeStyle = 'rgba(212, 175, 55, 0.25)';
+        ctx.lineWidth = 1;
+        raindrops.forEach(drop => {
+          ctx.beginPath();
+          ctx.moveTo(drop.x, drop.y);
+          ctx.lineTo(drop.x - drop.length * 0.2, drop.y + drop.length);
+          ctx.stroke();
+
+          drop.y += drop.speed;
+          drop.x -= drop.speed * 0.2;
+          if (drop.y > height) {
+            drop.y = -drop.length;
+            drop.x = Math.random() * width;
+          }
+        });
+
+        if (Math.random() < 0.005) {
+          lightningOpacity = Math.random() * 0.3 + 0.1;
+        }
+        if (lightningOpacity > 0) {
+          ctx.fillStyle = `rgba(255, 230, 180, ${lightningOpacity})`;
+          ctx.fillRect(0, 0, width, height);
+          lightningOpacity *= 0.85;
+          if (lightningOpacity < 0.01) lightningOpacity = 0;
+        }
+
+        heroCanvasAnim = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function renderGHCanvas() {
+      const canvas = document.getElementById('greathall-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const embers = Array.from({ length: 65 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 2.5 + 0.5,
+        speedY: Math.random() * 0.8 + 0.3,
+        speedX: (Math.random() - 0.5) * 0.5,
+        opacity: Math.random() * 0.7 + 0.3
+      }));
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        embers.forEach(ember => {
+          ctx.fillStyle = `rgba(255, 170, 50, ${ember.opacity})`;
+          ctx.beginPath();
+          ctx.arc(ember.x, ember.y, ember.radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          ember.y -= ember.speedY;
+          ember.x += ember.speedX;
+          if (ember.y < 0) {
+            ember.y = height + 10;
+            ember.x = Math.random() * width;
+          }
+        });
+        ghCanvasAnim = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function renderArcCanvas() {
+      const canvas = document.getElementById('archives-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const dust = Array.from({ length: 50 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.8 + 0.5,
+        speedY: (Math.random() - 0.5) * 0.3,
+        speedX: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.5 + 0.2
+      }));
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        dust.forEach(p => {
+          ctx.fillStyle = `rgba(230, 200, 140, ${p.opacity})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          p.y += p.speedY;
+          p.x += p.speedX;
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+        });
+        arcCanvasAnim = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function renderCouncilCanvas() {
+      const canvas = document.getElementById('council-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const particles = Array.from({ length: 60 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 2 + 0.5,
+        speedY: Math.random() * 0.5 + 0.2,
+        speedX: (Math.random() - 0.5) * 0.4,
+        opacity: Math.random() * 0.6 + 0.2
+      }));
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        
+        if (lightningOpacity > 0) {
+          ctx.fillStyle = `rgba(255, 215, 0, ${lightningOpacity})`;
+          ctx.fillRect(0, 0, width, height);
+          lightningOpacity *= 0.88;
+          if (lightningOpacity < 0.01) lightningOpacity = 0;
+        }
+
+        particles.forEach(p => {
+          ctx.fillStyle = `rgba(255, 190, 80, ${p.opacity})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          p.y -= p.speedY;
+          p.x += p.speedX;
+          if (p.y < 0) {
+            p.y = height + 10;
+            p.x = Math.random() * width;
+          }
+        });
+        councilCanvasAnim = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function renderThroneCanvas() {
+      const canvas = document.getElementById('throne-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      // Soft, slow-floating golden dust & calm candle specks
+      const particles = Array.from({ length: 45 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.6 + 0.4,
+        speedY: (Math.random() - 0.5) * 0.25,
+        speedX: (Math.random() - 0.5) * 0.2,
+        opacity: Math.random() * 0.45 + 0.15
+      }));
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        particles.forEach(p => {
+          ctx.fillStyle = `rgba(255, 215, 120, ${p.opacity})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          p.y += p.speedY;
+          p.x += p.speedX;
+
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+        });
+
+        throneCanvasAnim = requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function transitionToThroneRoom() {
+      playUnlockSequence();
+      const overlay = document.getElementById('throne-transition-overlay');
+      const councilScene = document.getElementById('scene-chamber3');
+      const throneScene = document.getElementById('scene-throne');
+      
+      const key1 = document.getElementById('ritual-key-1');
+      const key2 = document.getElementById('ritual-key-2');
+      const key3 = document.getElementById('ritual-key-3');
+      const textClaimed = document.getElementById('ritual-text-claimed');
+      const textDoor = document.getElementById('ritual-text-door');
+      const goldenFlare = document.getElementById('throne-golden-flare');
+
+      if (!overlay || !councilScene || !throneScene) return;
+
+      // 1. Fade Council Chamber into darkness & reveal ritual overlay
+      overlay.classList.remove('hidden');
+      overlay.style.opacity = '1';
+
+      // 2. Sequential Key Illumination Ritual (5-7 seconds)
+      // Step A: Illuminate Key 1 (0.8s)
+      setTimeout(() => {
+        if (key1) key1.className = key1.className.replace('opacity-20 scale-90', 'opacity-100 scale-105 text-amber-300 drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]');
+      }, 800);
+
+      // Step B: Illuminate Key 2 (1.8s)
+      setTimeout(() => {
+        if (key2) key2.className = key2.className.replace('opacity-20 scale-90', 'opacity-100 scale-105 text-amber-300 drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]');
+      }, 1800);
+
+      // Step C: Illuminate Key 3 (2.8s)
+      setTimeout(() => {
+        if (key3) key3.className = key3.className.replace('opacity-20 scale-90', 'opacity-100 scale-105 text-amber-300 drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]');
+      }, 2800);
+
+      // Step D: Display "THREE KEYS HAVE BEEN CLAIMED" (3.6s)
+      setTimeout(() => {
+        if (textClaimed) textClaimed.classList.remove('opacity-0');
+      }, 3600);
+
+      // Step E: Display "ONE FINAL DOOR REMAINS" & Deep Golden Unlocking Light (4.8s)
+      setTimeout(() => {
+        if (textDoor) textDoor.classList.remove('opacity-0');
+        if (goldenFlare) goldenFlare.classList.remove('opacity-0');
+      }, 4800);
+
+      // Step F: Transition smoothly into The Throne Room (6.2s)
+      setTimeout(() => {
+        councilScene.classList.add('opacity-0', 'pointer-events-none');
+        councilScene.classList.add('hidden');
+
+        throneScene.classList.remove('opacity-0', 'pointer-events-none');
+        throneScene.classList.add('opacity-100', 'pointer-events-auto');
+        unlockCastleRoom('throne');
+
+        renderThroneCanvas();
+
+        // Step G: Fade transition overlay
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+        }, 1000);
+
+      }, 6200);
+    }
+
+
+
+
+    // ============================================================
+    // CASTLE MAP — only previously unlocked rooms are revisitable.
+    // ============================================================
+    const castleRoomState = {
+      unlocked: { greatHall: true, archives: false, council: false, throne: false },
+      current: 'greatHall'
+    };
+
+    const castleRoomScenes = {
+      greatHall: 'scene-interior',
+      archives: 'scene-chamber2',
+      council: 'scene-chamber3',
+      throne: 'scene-throne'
+    };
+
+    function showCastleMapButton() {
+      const btn = document.getElementById('castle-map-button');
+      if (btn) btn.classList.remove('hidden');
+      updateCastleMap();
+    }
+
+    function toggleCastleMap(force) {
+      const panel = document.getElementById('castle-map-panel');
+      const btn = document.getElementById('castle-map-button');
+      if (!panel || !btn) return;
+      const shouldOpen = typeof force === 'boolean' ? force : panel.classList.contains('hidden');
+      panel.classList.toggle('hidden', !shouldOpen);
+      btn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+      if (shouldOpen) updateCastleMap();
+    }
+
+    function unlockCastleRoom(room) {
+      if (castleRoomState.unlocked.hasOwnProperty(room)) castleRoomState.unlocked[room] = true;
+      castleRoomState.current = room;
+      updateCastleMap();
+    }
+
+    function updateCastleMap() {
+      Object.keys(castleRoomScenes).forEach(room => {
+        const button = document.querySelector(`[data-map-room="${room}"]`);
+        const status = document.querySelector(`[data-map-status="${room}"]`);
+        if (!button || !status) return;
+        const unlocked = castleRoomState.unlocked[room];
+        button.disabled = !unlocked;
+        button.classList.toggle('current', castleRoomState.current === room);
+        status.textContent = !unlocked ? '🔒' : (castleRoomState.current === room ? '◆' : '✓');
+      });
+    }
+
+    function visitUnlockedRoom(room) {
+      if (!castleRoomState.unlocked[room]) return;
+      Object.entries(castleRoomScenes).forEach(([key, sceneId]) => {
+        const scene = document.getElementById(sceneId);
+        if (!scene) return;
+        const active = key === room;
+        scene.classList.toggle('hidden', !active);
+        scene.classList.toggle('opacity-0', !active);
+        scene.classList.toggle('pointer-events-none', !active);
+        scene.classList.toggle('opacity-100', active);
+        scene.classList.toggle('pointer-events-auto', active);
+      });
+      castleRoomState.current = room;
+      updateCastleMap();
+      toggleCastleMap(false);
+      const target = document.getElementById(castleRoomScenes[room]);
+      if (target) target.scrollTop = 0;
+    }
+
+    // ============================================================
+    // ELEVATION CASTLE SOUND SYSTEM
+    // Sound defaults ON and begins after the first participant click.
+    // ============================================================
+    let castleSoundEnabled = true;
+    let castleAudioStarted = false;
+    let ambienceDuckTimer = null;
+
+    const castleAudioVolumes = {
+      ambience: 0.12,
+      thunder: 0.48,
+      unlock: 0.48,
+      door: 0.36,
+      banish: 0.52,
+      key: 0.30,
+      selection: 0.12,
+      faithful: 0.22
+    };
+
+    function castleAudio(id) { return document.getElementById(id); }
+
+    function setCastleAudioVolumes() {
+      const map = [
+        ['audio-ambience', castleAudioVolumes.ambience],
+        ['audio-enter-thunder', castleAudioVolumes.thunder],
+        ['audio-unlock', castleAudioVolumes.unlock],
+        ['audio-door', castleAudioVolumes.door],
+        ['audio-banish', castleAudioVolumes.banish],
+        ['audio-key', castleAudioVolumes.key],
+        ['audio-selection', castleAudioVolumes.selection],
+        ['audio-faithful', castleAudioVolumes.faithful]
+      ];
+      map.forEach(([id, volume]) => {
+        const el = castleAudio(id);
+        if (el) {
+          el.volume = volume;
+          el.muted = !castleSoundEnabled;
+        }
+      });
+    }
+
+    function safePlay(el, restart = true) {
+      if (!el || !castleSoundEnabled) return;
+      if (restart) {
+        try { el.currentTime = 0; } catch(e) {}
+      }
+      const p = el.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    }
+
+    function playCastleSound(id, { restart = true, duck = false } = {}) {
+      if (!castleSoundEnabled) return;
+      if (duck) duckCastleAmbience(0.03, 2200);
+      safePlay(castleAudio(id), restart);
+    }
+
+    function startCastleAmbience() {
+      if (!castleSoundEnabled) return;
+      const a = castleAudio('audio-ambience');
+      if (!a) return;
+      a.volume = castleAudioVolumes.ambience;
+      safePlay(a, false);
+      castleAudioStarted = true;
+    }
+
+    function duckCastleAmbience(level = 0.03, duration = 1800) {
+      const a = castleAudio('audio-ambience');
+      if (!a || a.paused || !castleSoundEnabled) return;
+      if (ambienceDuckTimer) clearTimeout(ambienceDuckTimer);
+      a.volume = level;
+      ambienceDuckTimer = setTimeout(() => {
+        if (castleSoundEnabled) a.volume = castleAudioVolumes.ambience;
+      }, duration);
+    }
+
+    function toggleCastleSound() {
+      castleSoundEnabled = !castleSoundEnabled;
+      const icon = document.getElementById('castle-sound-icon');
+      const label = document.getElementById('castle-sound-label');
+      const toggle = document.getElementById('castle-sound-toggle');
+
+      document.querySelectorAll('audio').forEach(el => el.muted = !castleSoundEnabled);
+
+      if (icon) icon.textContent = castleSoundEnabled ? '🔊' : '🔇';
+      if (label) label.textContent = castleSoundEnabled ? 'SOUND ON' : 'MUTED';
+      if (toggle) {
+        toggle.setAttribute('aria-pressed', castleSoundEnabled ? 'true' : 'false');
+        toggle.setAttribute('aria-label', castleSoundEnabled ? 'Mute castle sound' : 'Turn castle sound on');
+      }
+
+      if (castleSoundEnabled && castleAudioStarted) startCastleAmbience();
+    }
+
+    function playUnlockSequence() {
+      playCastleSound('audio-unlock', { duck: true });
+      setTimeout(() => playCastleSound('audio-door', { duck: true }), 850);
+    }
+
+    function playKeyEarned() {
+      setTimeout(() => playCastleSound('audio-key', { duck: true }), 150);
+    }
+
+    function playSelectionCue() {
+      playCastleSound('audio-selection');
+    }
+
+    // Chamber IV: Five Faithful reveal + final reflection
+    const fiveFaithfulNames = [
+      "Start With What's Working",
+      "Focus on the Heart of the Task",
+      "One Doable Next Step",
+      "Build in Time to Act",
+      "Make It Sustainable"
+    ];
+    let fiveFaithfulRevealed = false;
+    let chosenFaithfulIndex = null;
+
+    function revealFiveFaithful() {
+      if (fiveFaithfulRevealed) return;
+      fiveFaithfulRevealed = true;
+
+      const revealBtn = document.getElementById('reveal-faithful-btn');
+      const cards = Array.from(document.querySelectorAll('[data-faithful]'));
+      const reflection = document.getElementById('final-reflection');
+      const live = document.getElementById('throne-live-region');
+
+      if (revealBtn) {
+        revealBtn.disabled = true;
+        revealBtn.classList.add('opacity-40', 'cursor-default');
+        revealBtn.textContent = 'THE FIVE FAITHFUL ARE REVEALED';
+      }
+
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.remove('opacity-0', 'pointer-events-none');
+          card.classList.add('revealed', 'selectable');
+          playCastleSound('audio-faithful', { duck: true });
+          if (live) live.textContent = `Faithful ${index + 1} revealed: ${fiveFaithfulNames[index]}.`;
+
+          if (index === cards.length - 1) {
+            setTimeout(() => {
+              if (reflection) reflection.classList.remove('hidden');
+              cards.forEach(c => c.setAttribute('aria-pressed', 'false'));
+              if (live) live.textContent = 'All Five Faithful have been revealed. Choose one to intentionally strengthen.';
+            }, 700);
+          }
+        }, index * 850);
+      });
+    }
+
+    function chooseFaithful(index) {
+      if (!fiveFaithfulRevealed) return;
+      playSelectionCue();
+      const cards = Array.from(document.querySelectorAll('[data-faithful]'));
+      const message = document.getElementById('chosen-faithful-message');
+      const live = document.getElementById('throne-live-region');
+
+      chosenFaithfulIndex = index;
+      cards.forEach((card, i) => {
+        card.classList.toggle('chosen', i === index);
+        card.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+      });
+
+      if (message) {
+        message.textContent = `Your Final Decree: ${fiveFaithfulNames[index]}. What is one small way you can make this visible in your next round of feedback?`;
+        message.classList.remove('hidden');
+      }
+      if (live) live.textContent = `${fiveFaithfulNames[index]} selected for your Final Decree.`;
+    }
+
+    // When you have the Google Doc URL, paste it here and the resource button will appear automatically.
+    const FIVE_FAITHFUL_GUIDE_URL = "https://docs.google.com/document/d/1trx9fBi1Obx7jCYc1qwAOm4HpNbXfRCc-7cLSafWtS4/edit?usp=sharing";
+
+    function configureFiveFaithfulGuide() {
+      const link = document.getElementById('five-faithful-guide-link');
+      if (!link || !FIVE_FAITHFUL_GUIDE_URL) return;
+      link.href = FIVE_FAITHFUL_GUIDE_URL;
+      link.classList.remove('hidden');
+    }
+
+
+    // Chamber II State & Data
+    const ancientLawsData = [
+      {
+        id: 0,
+        title: "ANCIENT LAW I",
+        location: "Resting on Writing Desk",
+        belief: "Students deserve feedback on every mistake.",
+        reflections: {
+          KEEP: "While comprehensive, providing feedback on every error can overwhelm learners. Strategic selective feedback preserves student energy for critical core goals.",
+          REWRITE: "Wisely observed! Rewriting this law to focus on targeted, prioritized feedback helps students focus on high-leverage growth areas.",
+          BANISH: "Banishing the expectation of total error feedback protects students from fatigue and fosters autonomous self-correction."
+        }
+      },
+      {
+        id: 1,
+        title: "ANCIENT LAW II",
+        location: "Sticking out of Leather Tome",
+        belief: "The more personalized feedback is, the more powerful it becomes.",
+        reflections: {
+          KEEP: "Personalized feedback builds trust and targets individual misconceptions, though it must be balanced with sustainable teacher effort.",
+          REWRITE: "Refining this law acknowledges that while individualized feedback is powerful, shared pattern feedback often yields equal growth in less time.",
+          BANISH: "Challenging the exclusivity of individual feedback opens the door to powerful peer and whole-class feedback models."
+        }
+      },
+      {
+        id: 2,
+        title: "ANCIENT LAW III",
+        location: "Tucked into Library Shelf",
+        belief: "Praise should come before criticism.",
+        reflections: {
+          KEEP: "The 'praise sandwich' can cushion feedback, but experienced learners often prefer direct, clear guidance without formulaic pleasantries.",
+          REWRITE: "Rewriting to emphasize authentic recognition over formulaic praise ensures feedback remains genuine and trustworthy.",
+          BANISH: "Banishing rigid praise structures allows feedback to be honest, immediate, and focused directly on learning."
+        }
+      },
+      {
+        id: 3,
+        title: "ANCIENT LAW IV",
+        location: "Rolled Scroll on Oak Table",
+        belief: "Rubrics should do most of the heavy lifting.",
+        reflections: {
+          KEEP: "Rubrics clarify expectations, but passive rubric checking without direct dialogue or specific prompts rarely inspires deep revision.",
+          REWRITE: "Rewriting to pair rubric criteria with explicit action prompts transforms passive scoring into active learning.",
+          BANISH: "Banishing rubric dependency encourages teachers to offer dynamic, responsive feedback tailored to actual student thinking."
+        }
+      },
+      {
+        id: 4,
+        title: "ANCIENT LAW V",
+        location: "Tied with Ribbon on Spiral Stairs",
+        belief: "Students should have an opportunity to act on feedback before moving on.",
+        reflections: {
+          KEEP: "Crucial insight! Feedback without dedicated time for application is merely advice. Immediate practice locks in learning.",
+          REWRITE: "Rewriting to guarantee built-in revision time in class ensures feedback directly drives learning forward.",
+          BANISH: "While feedback demands action, banishing rigid timing allows for flexible revision cycles when immediate action isn't feasible."
+        }
+      },
+      {
+        id: 5,
+        title: "ANCIENT LAW VI",
+        location: "Sealed Scroll in Chest Slot",
+        belief: "Whole-class feedback can sometimes be more effective than thirty individual comments.",
+        reflections: {
+          KEEP: "An essential truth! Addressing common patterns collectively builds shared understanding while saving valuable teacher time.",
+          REWRITE: "Rewriting this law emphasizes blending collective feedback with brief targeted check-ins for maximum efficiency.",
+          BANISH: "While whole-class feedback is efficient, banishing it in favor of purely individual check-ins prioritizes personal connection."
+        }
+      }
+    ];
+
+    let ancientLawsStatus = [null, null, null, null, null, null]; // Stores KEEP, REWRITE, BANISH or null
+    let activeLawIndex = null;
+
+    // Transition from Chamber I to Chamber II
+    function transitionToChamber2() {
+      playUnlockSequence();
+      const lockOverlay = document.getElementById('chamber2-transition-overlay');
+      const interiorScene = document.getElementById('scene-interior');
+      const archivesScene = document.getElementById('scene-chamber2');
+      const lockSvg = document.getElementById('lock-svg-key');
+      const hiddenDoorWrapper = document.getElementById('chamber2-transition-overlay');
+      const hiddenLight = document.getElementById('hidden-door-light');
+      const statusText = document.getElementById('hidden-door-status-text');
+
+      // 1. Reveal Transition Screen & Animate Key Turning in Lock
+      lockOverlay.classList.remove('hidden');
+      lockOverlay.style.opacity = '1';
+      if (lockSvg) lockSvg.classList.add('animate-key-lock');
+      if (statusText) statusText.innerText = "Turning the key in the antique lock...";
+
+      // 2. Unlatch & Slowly Open Hidden Library Doors
+      setTimeout(() => {
+        if (statusText) statusText.innerText = "The hidden red library door unlatches slowly...";
+        if (hiddenDoorWrapper) hiddenDoorWrapper.classList.add('doors-open');
+        if (hiddenLight) hiddenLight.classList.remove('opacity-0');
+
+        // 3. Step Through into Hidden Archives
+        setTimeout(() => {
+          interiorScene.classList.add('opacity-0', 'pointer-events-none');
+          interiorScene.classList.add('hidden');
+
+          archivesScene.classList.remove('opacity-0', 'pointer-events-none');
+          archivesScene.classList.add('opacity-100', 'pointer-events-auto');
+
+          renderAncientLawsGrid();
+          renderArcCanvas();
+
+          // Fade out lock transition overlay
+          setTimeout(() => {
+            lockOverlay.style.opacity = '0';
+            setTimeout(() => {
+              lockOverlay.classList.add('hidden');
+            }, 700);
+          }, 800);
+
+        }, 1400);
+
+      }, 1200);
+    }
+
+    function renderAncientLawsGrid() {
+      const grid = document.getElementById('ancient-laws-grid');
+      if (!grid) return;
+
+      grid.innerHTML = '';
+      let consideredCount = 0;
+
+      ancientLawsData.forEach((law, idx) => {
+        const dest = ancientLawsStatus[idx];
+        if (dest !== null) consideredCount++;
+
+        const card = document.createElement('div');
+        card.id = `ancient-law-card-${idx}`;
+        card.onclick = () => inspectAncientLaw(idx);
+
+        let statusBadge = '';
+        if (dest === 'KEEP') {
+          statusBadge = `<span class="px-2.5 py-1 bg-amber-950/90 text-amber-300 border border-amber-600 rounded text-[10px] font-bold tracking-wider uppercase">📜 KEEP • ARCHIVE SHELF</span>`;
+        } else if (dest === 'REWRITE') {
+          statusBadge = `<span class="px-2.5 py-1 bg-amber-900/90 text-amber-200 border border-amber-500 rounded text-[10px] font-bold tracking-wider uppercase">✒️ REWRITE • WRITING DESK</span>`;
+        } else if (dest === 'BANISH') {
+          statusBadge = `<span class="px-2.5 py-1 bg-red-950/90 text-red-200 border border-red-700 rounded text-[10px] font-bold tracking-wider uppercase">🔒 BANISH • IRON CHEST</span>`;
+        } else {
+          statusBadge = `<span class="px-2.5 py-1 bg-stone-900/80 text-amber-400 border border-amber-600/50 rounded text-[10px] font-bold tracking-wider uppercase animate-pulse">✨ DISCOVER</span>`;
+        }
+
+        card.className = `parchment-item rounded-sm p-5 relative transform transition-all duration-300 cursor-pointer flex flex-col justify-between group hover:-translate-y-1 hover:shadow-2xl ${
+          dest ? 'opacity-90' : 'animate-manuscript-glow'
+        } ${idx % 2 === 0 ? 'rotate-1' : '-rotate-1'}`;
+
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-center mb-2 pb-2 border-b border-amber-900/30">
+              <span class="font-cinzel text-xs font-bold tracking-widest text-amber-900 uppercase">
+                ${law.title}
+              </span>
+              <span class="font-cinzel text-[10px] text-amber-950/70 font-bold uppercase tracking-wider">
+                ${law.location}
+              </span>
+            </div>
+
+            <p class="font-garamond text-lg md:text-xl font-bold italic text-stone-900 leading-snug my-2 line-clamp-3">
+              "${law.belief}"
+            </p>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-amber-900/20 flex justify-between items-center">
+            ${statusBadge}
+            <span class="font-cinzel text-xs font-bold text-amber-950 group-hover:text-amber-800 uppercase tracking-wider">
+              INSPECT &rarr;
+            </span>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+
+      // Update progress tracker
+      const progressText = document.getElementById('ancient-laws-progress');
+      if (progressText) {
+        progressText.innerText = `${consideredCount} / 6 CONSIDERED`;
+      }
+
+      // Check if all 6 laws have been categorized
+      if (consideredCount === 6) {
+        revealWisdomKey();
+      }
+    }
+
+    function inspectAncientLaw(index) {
+      activeLawIndex = index;
+      const data = ancientLawsData[index];
+      const currentDest = ancientLawsStatus[index];
+
+      document.getElementById('modal-law-header').innerText = `${data.title} • ${data.location.toUpperCase()}`;
+      document.getElementById('modal-law-belief').innerText = `"${data.belief}"`;
+
+      const reflectionContainer = document.getElementById('law-reflection-container');
+      const reflectionText = document.getElementById('law-reflection-text');
+
+      if (currentDest) {
+        reflectionContainer.classList.remove('hidden');
+        reflectionText.innerText = data.reflections[currentDest];
+      } else {
+        reflectionContainer.classList.add('hidden');
+      }
+
+      document.getElementById('ancient-law-modal').classList.remove('hidden');
+    }
+
+    function closeAncientLawModal() {
+      document.getElementById('ancient-law-modal').classList.add('hidden');
+    }
+
+    function assignLawDestination(destination) {
+      playSelectionCue();
+      if (activeLawIndex === null) return;
+
+      ancientLawsStatus[activeLawIndex] = destination;
+      const data = ancientLawsData[activeLawIndex];
+
+      // Reveal Reflection in Modal
+      const reflectionContainer = document.getElementById('law-reflection-container');
+      const reflectionText = document.getElementById('law-reflection-text');
+      
+      reflectionText.innerText = data.reflections[destination];
+      reflectionContainer.classList.remove('hidden');
+
+      // Update Grid UI
+      renderAncientLawsGrid();
+    }
+
+    function revealWisdomKey() {
+      playKeyEarned();
+      const archivesPrompt = document.getElementById('archives-prompt-card');
+      const wisdomKeyCard = document.getElementById('wisdom-key-card');
+
+      if (archivesPrompt) archivesPrompt.classList.add('hidden');
+      if (wisdomKeyCard) wisdomKeyCard.classList.remove('hidden');
+    }
+
+    // Chamber III Council Chamber State & Tools Data
+    const councilToolsData = [
+      {
+        id: "written_comments",
+        title: "Detailed Written Comments",
+        icon: "📜",
+        objectName: "Parchment Scroll",
+        description: "Tailored written notes on individual submissions."
+      },
+      {
+        id: "voice_feedback",
+        title: "Voice Feedback",
+        icon: "📯",
+        objectName: "Speaking Horn",
+        description: "Audio recordings capturing nuanced tone and encouragement."
+      },
+      {
+        id: "rubric_only",
+        title: "Rubric Only",
+        icon: "🛡️",
+        objectName: "Engraved Shield",
+        description: "Clear criteria scoring without added prose."
+      },
+      {
+        id: "rubric_comment",
+        title: "Rubric + One Personalized Comment",
+        icon: "🛡️📜",
+        objectName: "Shield with Attached Parchment",
+        description: "Standard criteria paired with one high-impact focal note."
+      },
+      {
+        id: "whole_class",
+        title: "Whole-Class Feedback",
+        icon: "📜👑",
+        objectName: "Royal Proclamation",
+        description: "Common patterns addressed collectively for all learners."
+      },
+      {
+        id: "comment_bank",
+        title: "Comment Bank",
+        icon: "🧰",
+        objectName: "Chest of Reusable Scrolls",
+        description: "Curated library of modular, frequent feedback snippets."
+      },
+      {
+        id: "peer_feedback",
+        title: "Peer Feedback Before Teacher",
+        icon: "✒️✒️",
+        objectName: "Crossed Quills",
+        description: "Learners critique each other using structured criteria before the teacher responds."
+      },
+      {
+        id: "self_assessment",
+        title: "Student Self-Assessment First",
+        icon: "🪞",
+        objectName: "Mirror of Reflection",
+        description: "Students identify a strength and priority for growth before teacher feedback."
+      },
+      {
+        id: "revision_conference",
+        title: "Revision Conference / Small-Group Feedback",
+        icon: "🕯️",
+        objectName: "Council Candle",
+        description: "Brief targeted conferencing with students who share a similar feedback need."
+      },
+      {
+        id: "exemplar_comparison",
+        title: "Exemplar + Comparison",
+        icon: "📖",
+        objectName: "Illuminated Codex",
+        description: "Students compare their work with a strong model or annotated exemplar before revising."
+      }
+    ];
+
+    let selectedCouncilTools = [];
+    let isDecreeCast = false;
+
+    // Transition from Chamber II to Chamber III
+    function transitionToChamber3() {
+      playUnlockSequence();
+      const lockOverlay = document.getElementById('chamber3-transition-overlay');
+      const archivesScene = document.getElementById('scene-chamber2');
+      const councilScene = document.getElementById('scene-chamber3');
+      const lockSvg = document.getElementById('council-lock-svg-key');
+      const councilDoorWrapper = document.getElementById('chamber3-transition-overlay');
+      const councilLight = document.getElementById('council-door-light');
+      const statusText = document.getElementById('council-door-status-text');
+
+      // 1. Reveal Transition Overlay
+      lockOverlay.classList.remove('hidden');
+      lockOverlay.style.opacity = '1';
+      if (lockSvg) lockSvg.classList.add('animate-key-lock');
+      if (statusText) statusText.innerText = "Turning the Key of Wisdom in the Council Arch...";
+
+      // 2. Unlatch High Arched Doors
+      setTimeout(() => {
+        if (statusText) statusText.innerText = "The grand doors of the Council Chamber swing open...";
+        if (councilDoorWrapper) councilDoorWrapper.classList.add('doors-open');
+        if (councilLight) councilLight.classList.remove('opacity-0');
+
+        // 3. Step Through into Council Chamber
+        setTimeout(() => {
+          archivesScene.classList.add('opacity-0', 'pointer-events-none');
+          archivesScene.classList.add('hidden');
+
+          councilScene.classList.remove('opacity-0', 'pointer-events-none');
+          councilScene.classList.add('opacity-100', 'pointer-events-auto');
+
+          renderCouncilTable();
+          renderCouncilCanvas();
+          unlockCastleRoom('council');
+
+          // Fade out lock transition overlay
+          setTimeout(() => {
+            lockOverlay.style.opacity = '0';
+            setTimeout(() => {
+              lockOverlay.classList.add('hidden');
+            }, 700);
+          }, 800);
+
+        }, 1400);
+
+      }, 1200);
+    }
+
+    function renderCouncilTable() {
+      const grid = document.getElementById('council-tools-grid');
+      const slotsContainer = document.getElementById('table-center-slots');
+      const tracker = document.getElementById('council-selection-tracker');
+      const discussionSection = document.getElementById('council-discussion-section');
+
+      if (!grid || !slotsContainer) return;
+
+      // Update Selection Tracker
+      if (tracker) {
+        tracker.innerText = `${selectedCouncilTools.length} / 3 SELECTED`;
+      }
+
+      // Render Table Center Selected Strategy Slots
+      slotsContainer.innerHTML = '';
+      if (selectedCouncilTools.length === 0) {
+        slotsContainer.innerHTML = `
+          <span class="font-garamond text-sm text-amber-200/60 italic">
+            Choose the three relics you would carry into your classroom.
+          </span>
+        `;
+      } else {
+        selectedCouncilTools.forEach(toolId => {
+          const tool = councilToolsData.find(t => t.id === toolId);
+          if (!tool) return;
+
+          const chip = document.createElement('div');
+          chip.className = `inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-950/90 border border-amber-400 text-amber-100 text-xs font-cinzel font-bold shadow-lg animate-smoke-text ${
+            isDecreeCast ? 'tool-card-decree-glow' : ''
+          }`;
+          chip.innerHTML = `
+            <span>${tool.icon}</span>
+            <span>${tool.title}</span>
+            ${!isDecreeCast ? `
+              <button onclick="toggleCouncilTool('${tool.id}')" aria-label="Remove ${tool.title}" class="ml-1 text-amber-300 hover:text-white font-bold cursor-pointer">✕</button>
+            ` : ''}
+          `;
+          slotsContainer.appendChild(chip);
+        });
+      }
+
+      // Render 10 Interactive Tool Cards around Round Table
+      grid.innerHTML = '';
+      councilToolsData.forEach((tool) => {
+        const isSelected = selectedCouncilTools.includes(tool.id);
+        const isMaxedOut = selectedCouncilTools.length >= 3 && !isSelected;
+
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.onclick = () => toggleCouncilTool(tool.id);
+        
+        let cardStateClasses = 'tool-card cursor-pointer';
+        if (isDecreeCast) {
+          if (isSelected) {
+            cardStateClasses += ' tool-card-decree-glow';
+          } else {
+            cardStateClasses += ' tool-card-faded';
+          }
+        } else if (isSelected) {
+          cardStateClasses += ' tool-card-selected';
+        } else if (isMaxedOut) {
+          cardStateClasses += ' opacity-50 cursor-not-allowed';
+        }
+
+        card.className = `p-4 rounded-xl text-left flex flex-col justify-between h-full min-h-[190px] transition-all ${cardStateClasses}`;
+        card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-3xl">${tool.icon}</span>
+              <span class="font-cinzel text-[10px] text-amber-400/80 font-bold uppercase tracking-widest border border-amber-800/60 px-2 py-0.5 rounded bg-black/40">
+                ${tool.objectName}
+              </span>
+            </div>
+
+            <h4 class="font-cinzel text-sm font-bold text-amber-100 leading-snug">
+              ${tool.title}
+            </h4>
+
+            <p class="font-garamond text-xs text-amber-200/80 italic mt-1.5 leading-relaxed">
+              ${tool.description}
+            </p>
+          </div>
+
+          <div class="mt-3 pt-2 border-t border-amber-900/30 flex justify-between items-center text-[10px] font-cinzel text-amber-300">
+            <span>${isSelected ? '✓ IN DECREE' : '+ SELECT TOOL'}</span>
+            <span class="text-amber-400 font-bold">&rarr;</span>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+
+      // Reveal discussion section when exactly 3 items are selected
+      if (discussionSection && !isDecreeCast) {
+        if (selectedCouncilTools.length === 3) {
+          discussionSection.classList.remove('hidden');
+        } else {
+          discussionSection.classList.add('hidden');
+        }
+      }
+    }
+
+    function toggleCouncilTool(toolId) {
+      playSelectionCue();
+      if (isDecreeCast) return; // Frozen after decree cast
+
+      const index = selectedCouncilTools.indexOf(toolId);
+      if (index > -1) {
+        selectedCouncilTools.splice(index, 1);
+      } else {
+        if (selectedCouncilTools.length < 3) {
+          selectedCouncilTools.push(toolId);
+        }
+      }
+
+      renderCouncilTable();
+    }
+
+    function castCouncilDecree() {
+      if (selectedCouncilTools.length !== 3) return;
+      playCastleSound('audio-banish', { duck: true });
+      playKeyEarned();
+
+      isDecreeCast = true;
+
+      // 1. Candles & Lighting Overlay Brighten
+      const lightOverlay = document.getElementById('council-light-overlay');
+      if (lightOverlay) {
+        lightOverlay.classList.remove('bg-amber-400/0');
+        lightOverlay.classList.add('bg-amber-400/25', 'decree-brighten');
+      }
+
+      // Flash lightning / glow
+      lightningOpacity = 0.5;
+      setTimeout(() => { lightningOpacity = 0; }, 180);
+
+      // Hide discussion prompts container
+      const discussionSection = document.getElementById('council-discussion-section');
+      if (discussionSection) discussionSection.classList.add('hidden');
+
+      // Update tools grid visual glow/fade
+      renderCouncilTable();
+
+      // Reveal Decree Outcome Banner & Key of Resolve
+      const outcomeSection = document.getElementById('council-decree-outcome');
+      if (outcomeSection) {
+        outcomeSection.classList.remove('hidden');
+      }
+    }
+
+    function handleThroneRoomClick() {
+      const modal = document.getElementById('throne-locked-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeThroneModal() {
+      const modal = document.getElementById('throne-locked-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // Chamber I Evidence & Drag/Reorder State
+    let evidenceItems = [
+      {
+        id: 1,
+        title: "EVIDENCE A",
+        label: "Targeted Action Prompt",
+        text: "Your argument is clear, but in paragraph 3, adding a quote from the source text will prove your claim. Try re-writing sentence 2 with evidence.",
+        type: "high"
+      },
+      {
+        id: 2,
+        title: "EVIDENCE B",
+        label: "Guiding Question",
+        text: "Notice how your thesis mentions two main causes, but paragraph 4 introduces a third. How can you align paragraph 4 with your thesis statement?",
+        type: "high"
+      },
+      {
+        id: 3,
+        title: "EVIDENCE C",
+        label: "Exemplar Comparison",
+        text: "Look at paragraph 2 where you explained cause and effect. Apply that same structure to paragraph 4 to strengthen your conclusion.",
+        type: "high"
+      },
+      {
+        id: 4,
+        title: "EVIDENCE D",
+        label: "Formulaic Praise",
+        text: "Great job! Very creative writing. Keep up the good work!",
+        type: "low"
+      },
+      {
+        id: 5,
+        title: "EVIDENCE E",
+        label: "Overwhelming Copy-Editing",
+        text: "Fix 14 spelling mistakes, correct subject-verb agreement on lines 4, 8, and 12, fix punctuation in line 15, and capitalize proper nouns.",
+        type: "low"
+      },
+      {
+        id: 6,
+        title: "EVIDENCE F",
+        label: "Evaluative Grade Only",
+        text: "7/10. C+ work. Needs more effort in section 2.",
+        type: "low"
+      }
+    ];
+
+    let banishedCommentId = null;
+
+    function initiateCastleEntry() {
+      setCastleAudioVolumes();
+      castleAudioStarted = true;
+      safePlay(castleAudio('audio-enter-thunder'));
+      startCastleAmbience();
+      setTimeout(() => playCastleSound('audio-door', { duck: true }), 550);
+      const castleImgContainer = document.getElementById('castle-image-container');
+      const doorsOverlay = document.getElementById('doors-overlay');
+      const firelightBeam = document.getElementById('firelight-beam');
+      const heroTitleGroup = document.getElementById('hero-title-group');
+      const sceneOpening = document.getElementById('scene-opening');
+      const sceneInterior = document.getElementById('scene-interior');
+
+      if (castleImgContainer) castleImgContainer.classList.add('camera-zoom-push');
+      if (heroTitleGroup) heroTitleGroup.classList.add('opacity-0');
+
+      setTimeout(() => {
+        if (doorsOverlay) {
+          doorsOverlay.classList.remove('hidden');
+          doorsOverlay.style.opacity = '1';
+        }
+        
+        setTimeout(() => {
+          if (firelightBeam) firelightBeam.classList.remove('opacity-0');
+          if (doorsOverlay) doorsOverlay.classList.add('doors-open');
+
+          setTimeout(() => {
+            if (sceneOpening) {
+              sceneOpening.classList.add('opacity-0', 'pointer-events-none');
+              setTimeout(() => sceneOpening.classList.add('hidden'), 500);
+            }
+            if (sceneInterior) {
+              sceneInterior.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+              sceneInterior.classList.add('opacity-100', 'pointer-events-auto');
+            }
+            renderGHCanvas();
+            renderEvidenceTable();
+
+            setTimeout(() => {
+              if (doorsOverlay) {
+                doorsOverlay.style.opacity = '0';
+                setTimeout(() => doorsOverlay.classList.add('hidden'), 700);
+              }
+            }, 600);
+          }, 1200);
+        }, 300);
+      }, 500);
+    }
+
+    function renderEvidenceTable() {
+      const grid = document.getElementById('evidence-table-grid');
+      if (!grid) return;
+
+      grid.innerHTML = '';
+
+      evidenceItems.forEach((item, index) => {
+        const isBanished = banishedCommentId === item.id;
+        const card = document.createElement('div');
+        card.className = `parchment-item rounded-sm p-5 relative transform transition-all duration-300 flex flex-col justify-between ${
+          isBanished ? 'parchment-scorched opacity-40 grayscale pointer-events-none' : ''
+        } ${index % 2 === 0 ? 'rotate-1' : '-rotate-1'}`;
+
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-center mb-2 pb-2 border-b border-amber-900/30">
+              <span class="font-cinzel text-xs font-bold tracking-widest text-amber-900 uppercase">
+                RANK #${index + 1} &bull; ${item.title}
+              </span>
+              <span class="font-cinzel text-[10px] text-amber-900/80 font-bold uppercase tracking-wider bg-amber-900/10 px-2 py-0.5 rounded">
+                ${item.label}
+              </span>
+            </div>
+            <p class="font-garamond text-base md:text-lg font-bold italic text-stone-900 leading-snug my-2">
+              "${item.text}"
+            </p>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-amber-900/20 flex justify-between items-center">
+            <span class="font-cinzel text-[10px] text-amber-950 font-bold uppercase">
+              ${isBanished ? '🔥 BANISHED TO HEARTH' : 'EVIDENCE ITEM'}
+            </span>
+            ${!isBanished ? `
+              <div class="flex items-center gap-1">
+                <button onclick="moveEvidence(${index}, -1)" ${index === 0 ? 'disabled' : ''} class="px-2 py-1 bg-amber-900/20 hover:bg-amber-900/40 disabled:opacity-20 text-stone-900 font-bold rounded text-xs transition-all cursor-pointer" title="Move Up">▲</button>
+                <button onclick="moveEvidence(${index}, 1)" ${index === evidenceItems.length - 1 ? 'disabled' : ''} class="px-2 py-1 bg-amber-900/20 hover:bg-amber-900/40 disabled:opacity-20 text-stone-900 font-bold rounded text-xs transition-all cursor-pointer" title="Move Down">▼</button>
+              </div>
+            ` : ''}
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function moveEvidence(index, direction) {
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= evidenceItems.length) return;
+
+      const temp = evidenceItems[index];
+      evidenceItems[index] = evidenceItems[newIndex];
+      evidenceItems[newIndex] = temp;
+
+      renderEvidenceTable();
+    }
+
+    function promptCastVerdict() {
+      const modal = document.getElementById('verdict-modal');
+      const list = document.getElementById('verdict-options-list');
+      if (!modal || !list) return;
+
+      list.innerHTML = '';
+
+      evidenceItems.forEach((item) => {
+        const btn = document.createElement('button');
+        btn.onclick = () => castVerdict(item.id);
+        btn.className = 'w-full p-3.5 rounded bg-stone-900 hover:bg-amber-950 border border-amber-900/60 hover:border-amber-500 text-left transition-all flex items-start gap-3 cursor-pointer group';
+        btn.innerHTML = `
+          <span class="text-xl">🔥</span>
+          <div class="space-y-0.5">
+            <div class="font-cinzel text-xs font-bold text-amber-300 group-hover:text-amber-200 uppercase tracking-wider">
+              BANISH: ${item.title} (${item.label})
+            </div>
+            <div class="font-garamond text-xs text-amber-200/70 italic line-clamp-1">
+              "${item.text}"
+            </div>
+          </div>
+        `;
+        list.appendChild(btn);
+      });
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeVerdictModal() {
+      const modal = document.getElementById('verdict-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function castVerdict(commentId) {
+      playCastleSound('audio-banish', { duck: true });
+      playKeyEarned();
+      banishedCommentId = commentId;
+      closeVerdictModal();
+
+      renderEvidenceTable();
+
+      const verdictBanner = document.getElementById('verdict-banner');
+      const banishStatusBar = document.getElementById('banish-status-bar');
+      const keyRewardCard = document.getElementById('key-reward-card');
+
+      if (verdictBanner) verdictBanner.classList.add('hidden');
+      if (banishStatusBar) banishStatusBar.classList.remove('hidden');
+      if (keyRewardCard) keyRewardCard.classList.remove('hidden');
+    }
+
+    // Window Load Initialization
+    window.onload = function() {
+      setCastleAudioVolumes();
+      renderHeroCanvas();
+      renderGHCanvas();
+      renderEvidenceTable();
+      configureFiveFaithfulGuide();
+    };
+  </script>
+
+  <!-- Elevation Castle Soundscape: optimized and embedded -->
+  <audio id="audio-ambience" src="audio/ambience.mp3" preload="auto" loop></audio>
+  <audio id="audio-enter-thunder" src="audio/thunder.mp3" preload="auto"></audio>
+  <audio id="audio-unlock" src="audio/unlock.mp3" preload="auto"></audio>
+  <audio id="audio-door" src="audio/door.mp3" preload="auto"></audio>
+  <audio id="audio-banish" src="audio/banish.mp3" preload="auto"></audio>
+  <audio id="audio-key" src="audio/key.mp3" preload="auto"></audio>
+  <audio id="audio-selection" src="audio/selection.mp3" preload="auto"></audio>
+  <audio id="audio-faithful" src="audio/faithful.mp3" preload="auto"></audio>
+
+  <button id="castle-sound-toggle" type="button" onclick="toggleCastleSound()" aria-pressed="true" aria-label="Mute castle sound">
+    <span id="castle-sound-icon" aria-hidden="true">🔊</span>
+    <span id="castle-sound-label" class="sound-label">SOUND ON</span>
+  </button>
+
+
+  <!-- Castle Map: revisit only rooms already unlocked -->
+  <button id="castle-map-button" type="button" class="hidden" onclick="toggleCastleMap()" aria-expanded="false" aria-controls="castle-map-panel" aria-label="Explore unlocked rooms">🗺️</button>
+  <nav id="castle-map-panel" class="hidden" aria-label="Explore Elevation Castle">
+    <div class="flex items-center justify-between gap-3 mb-2">
+      <div>
+        <p class="font-cinzel text-[10px] tracking-[0.28em] text-amber-400 uppercase">Explore Elevation Castle</p>
+        <p class="font-garamond text-sm text-amber-200/75 italic mt-1">Return to any chamber you have already unlocked.</p>
+      </div>
+      <button type="button" onclick="toggleCastleMap(false)" class="text-amber-200 text-xl px-2" aria-label="Close castle map">×</button>
+    </div>
+    <button class="castle-map-room" data-map-room="greatHall" onclick="visitUnlockedRoom('greatHall')"><span>🏰 GREAT HALL</span><span data-map-status="greatHall">●</span></button>
+    <button class="castle-map-room" data-map-room="archives" onclick="visitUnlockedRoom('archives')"><span>📚 HIDDEN ARCHIVES</span><span data-map-status="archives">🔒</span></button>
+    <button class="castle-map-room" data-map-room="council" onclick="visitUnlockedRoom('council')"><span>⚔️ COUNCIL CHAMBER</span><span data-map-status="council">🔒</span></button>
+    <button class="castle-map-room" data-map-room="throne" onclick="visitUnlockedRoom('throne')"><span>👑 THRONE ROOM</span><span data-map-status="throne">🔒</span></button>
+  </nav>
+
+</body>
+</html>
