@@ -572,6 +572,45 @@
         </p>
       </div>
 
+      <!-- Chamber I Deliberation Gate -->
+      <div id="great-hall-discussion-section" class="hidden w-full max-w-3xl p-6 md:p-8 rounded-xl bg-stone-950/90 border-2 border-amber-600/70 shadow-2xl backdrop-blur space-y-6 animate-smoke-text">
+        <div class="text-center pb-1">
+          <p class="font-cinzel text-xs font-bold tracking-[0.3em] text-amber-400 uppercase">
+            ROUNDTABLE DELIBERATION
+          </p>
+          <h3 class="font-title text-xl md:text-2xl font-bold gold-gradient-text mt-1">
+            DEFEND YOUR RANKING
+          </h3>
+        </div>
+
+        <div class="parchment-item rounded-lg p-6 md:p-8 text-stone-950 border-2 border-amber-800/60 shadow-2xl">
+          <ul class="space-y-3.5 font-garamond text-base md:text-xl font-bold italic leading-snug">
+            <li class="flex items-start gap-3">
+              <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
+              <span>Which two comments were hardest to rank? Why?</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
+              <span>What makes your #1 more likely to move learning forward than your #2?</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
+              <span>Which comment are you prepared to banish, and what makes it ineffective or potentially harmful to learning?</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="text-center">
+          <button
+            type="button"
+            onclick="openVerdictBanishment()"
+            class="px-8 py-4 font-cinzel text-sm md:text-base font-bold tracking-[0.25em] text-amber-100 uppercase bg-gradient-to-r from-red-950 via-stone-900 to-red-950 hover:from-red-900 hover:to-red-950 border-2 border-red-600/80 rounded shadow-2xl transition-all cursor-pointer hover:scale-105"
+          >
+            🔥 PROCEED TO BANISHMENT
+          </button>
+        </div>
+      </div>
+
       <!-- Banishment Status Bar -->
       <div id="banish-status-bar" class="hidden inline-flex items-center gap-3 px-6 py-2.5 bg-stone-950/90 border border-amber-700/50 rounded-full shadow-2xl backdrop-blur">
         <span class="font-cinzel text-xs text-amber-200 tracking-wider">🔥 A comment has been banished to the hearth</span>
@@ -703,7 +742,46 @@
         </p>
       </div>
 
-      <!-- Key of Wisdom Reward Card (Revealed after all 6 are categorized) -->
+      <!-- Chamber II Deliberation Gate -->
+      <div id="archives-discussion-section" class="hidden w-full max-w-3xl p-6 md:p-8 rounded-xl bg-stone-950/90 border-2 border-amber-600/70 shadow-2xl backdrop-blur space-y-6 animate-smoke-text">
+        <div class="text-center pb-1">
+          <p class="font-cinzel text-xs font-bold tracking-[0.3em] text-amber-400 uppercase">
+            THE ARCHIVES DEMAND AN ACCOUNT
+          </p>
+          <h3 class="font-title text-xl md:text-2xl font-bold gold-gradient-text mt-1">
+            QUESTION YOUR INHERITED WISDOM
+          </h3>
+        </div>
+
+        <div class="parchment-item rounded-lg p-6 md:p-8 text-stone-950 border-2 border-amber-800/60 shadow-2xl">
+          <ul class="space-y-3.5 font-garamond text-base md:text-xl font-bold italic leading-snug">
+            <li class="flex items-start gap-3">
+              <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
+              <span>Which Ancient Law caused the most disagreement at your table?</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
+              <span>Which one was hardest to banish because part of it still feels true?</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
+              <span>Choose one law you marked REWRITE. What would your new law say?</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="text-center">
+          <button
+            type="button"
+            onclick="revealWisdomKey()"
+            class="px-8 py-4 font-cinzel text-sm md:text-base font-bold tracking-[0.25em] text-amber-100 uppercase bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 hover:from-amber-800 hover:to-amber-900 border-2 border-amber-400/80 rounded shadow-2xl transition-all cursor-pointer hover:scale-105"
+          >
+            🔑 SEAL THE ARCHIVES
+          </button>
+        </div>
+      </div>
+
+      <!-- Key of Wisdom Reward Card (Revealed after deliberation) -->
       <div id="wisdom-key-card" class="hidden w-full max-w-md p-6 bg-gradient-to-b from-stone-950/95 to-amber-950/90 border-2 border-amber-500/80 rounded-lg shadow-2xl backdrop-blur text-center space-y-3 animate-smoke-text">
         <div class="flex justify-center">
           <div class="w-16 h-16 rounded-full bg-amber-950/90 border-2 border-amber-400/90 flex items-center justify-center shadow-[0_0_25px_rgba(255,215,0,0.6)]">
@@ -864,6 +942,10 @@
             <li class="flex items-start gap-3">
               <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
               <span>What makes your combination sustainable?</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-900 text-2xl font-black leading-none">&bull;</span>
+              <span>What feedback routine, shortcut, or system already works for you that someone at this table could steal?</span>
             </li>
           </ul>
         </div>
@@ -1947,9 +2029,10 @@
         progressText.innerText = `${consideredCount} / 6 CONSIDERED`;
       }
 
-      // Check if all 6 laws have been categorized
+      // Check if all 6 laws have been categorized.
+      // Deliberation is required before the Key of Wisdom is revealed.
       if (consideredCount === 6) {
-        revealWisdomKey();
+        revealArchivesDeliberation();
       }
     }
 
@@ -1996,13 +2079,32 @@
       renderAncientLawsGrid();
     }
 
+    function revealArchivesDeliberation() {
+      const archivesPrompt = document.getElementById('archives-prompt-card');
+      const discussion = document.getElementById('archives-discussion-section');
+      const wisdomKeyCard = document.getElementById('wisdom-key-card');
+
+      if (wisdomKeyCard && !wisdomKeyCard.classList.contains('hidden')) return;
+
+      if (archivesPrompt) archivesPrompt.classList.add('hidden');
+      if (discussion) {
+        discussion.classList.remove('hidden');
+        discussion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
     function revealWisdomKey() {
       playKeyEarned();
       const archivesPrompt = document.getElementById('archives-prompt-card');
+      const discussion = document.getElementById('archives-discussion-section');
       const wisdomKeyCard = document.getElementById('wisdom-key-card');
 
       if (archivesPrompt) archivesPrompt.classList.add('hidden');
-      if (wisdomKeyCard) wisdomKeyCard.classList.remove('hidden');
+      if (discussion) discussion.classList.add('hidden');
+      if (wisdomKeyCard) {
+        wisdomKeyCard.classList.remove('hidden');
+        wisdomKeyCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
 
     // Chamber III Council Chamber State & Tools Data
@@ -2199,8 +2301,11 @@
 
         card.innerHTML = `
           <div>
-            <div class="flex items-center mb-2">
+            <div class="flex items-center justify-between mb-2">
               <span class="text-3xl">${tool.icon}</span>
+              <span class="font-cinzel text-[10px] text-amber-400/80 font-bold uppercase tracking-widest border border-amber-800/60 px-2 py-0.5 rounded bg-black/40">
+                ${tool.objectName}
+              </span>
             </div>
 
             <h4 class="font-cinzel text-sm font-bold text-amber-100 leading-snug">
@@ -2443,6 +2548,17 @@
     }
 
     function promptCastVerdict() {
+      const discussion = document.getElementById('great-hall-discussion-section');
+      const verdictBanner = document.getElementById('verdict-banner');
+
+      if (discussion) {
+        discussion.classList.remove('hidden');
+        discussion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      if (verdictBanner) verdictBanner.classList.add('hidden');
+    }
+
+    function openVerdictBanishment() {
       const modal = document.getElementById('verdict-modal');
       const list = document.getElementById('verdict-options-list');
       if (!modal || !list) return;
@@ -2484,10 +2600,12 @@
       renderEvidenceTable();
 
       const verdictBanner = document.getElementById('verdict-banner');
+      const discussionSection = document.getElementById('great-hall-discussion-section');
       const banishStatusBar = document.getElementById('banish-status-bar');
       const keyRewardCard = document.getElementById('key-reward-card');
 
       if (verdictBanner) verdictBanner.classList.add('hidden');
+      if (discussionSection) discussionSection.classList.add('hidden');
       if (banishStatusBar) banishStatusBar.classList.remove('hidden');
       if (keyRewardCard) keyRewardCard.classList.remove('hidden');
     }
